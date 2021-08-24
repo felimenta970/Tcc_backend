@@ -15,6 +15,7 @@ namespace Tcc_backend.Models {
         public DateTime InitialDate { get; set; }
 
         public string UrlGit { get; set; }
+
     }
 
     public class ProjetoModelCreate {

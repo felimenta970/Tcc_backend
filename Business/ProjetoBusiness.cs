@@ -46,5 +46,27 @@ namespace Tcc_backend.Business {
 
         }
 
+        public Projeto Update(ProjetoModel projetoModel) {
+
+            var projeto = this.Get(projetoModel.ProjetoID);
+
+            projeto.Description = projetoModel.Description;
+            projeto.InitialDate = projetoModel.InitialDate;
+            projeto.Title = projetoModel.Title;
+            projeto.UrlGit = projetoModel.UrlGit;
+
+
+            _databaseContext.Projeto.Update(projeto);
+
+            return projeto;
+        }
+
+        public void Delete(int ProjetoID) {
+
+            var projeto = this.Get(ProjetoID);
+
+            _databaseContext.Projeto.Remove(projeto);
+        }
+
     }
 }

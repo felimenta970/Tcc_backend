@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Tcc_backend.Business;
 using Tcc_backend.Models;
+using Tcc_backend.Service;
 
 namespace Tcc_backend.Controllers {
 
@@ -13,12 +14,13 @@ namespace Tcc_backend.Controllers {
     [ApiController]
     public class ProjetoController : ControllerBase {
 
-        ProjetoBusiness bProjeto = new ProjetoBusiness();
+        ProjetoService sProjeto = new ProjetoService();
+
 
         [HttpGet]
         public List<ProjetoModel> List() {
 
-            var projetoList = bProjeto.List();
+            var projetoList = sProjeto.List();
 
             List<ProjetoModel> listModel = new List<ProjetoModel>();
            
@@ -39,7 +41,7 @@ namespace Tcc_backend.Controllers {
         [Route("{ProjetoID}")]
         public ProjetoModel Get([FromRoute] int ProjetoID) {
 
-            var proj = bProjeto.Get(ProjetoID);
+            var proj = sProjeto.Get(ProjetoID);
 
             ProjetoModel projetoModel = new ProjetoModel() {
                 ProjetoID = proj.ProjetoID,
@@ -55,9 +57,16 @@ namespace Tcc_backend.Controllers {
         [HttpPost]
         public int Adicionar([FromBody] ProjetoModelCreate projeto) {
 
-            var id = bProjeto.Adicionar(projeto);
+            var id = sProjeto.Adicionar(projeto);
 
             return id;
+        }
+
+        [HttpPut]
+        public ProjetoModel Put([FromBody] ProjetoModel projeto) {
+
+
+            return new ProjetoModel();
         }
 
     }
