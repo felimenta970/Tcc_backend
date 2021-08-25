@@ -66,6 +66,7 @@ namespace Tcc_backend.Business {
             var projeto = this.Get(ProjetoID);
 
             _databaseContext.Projeto.Remove(projeto);
+
         }
 
     }

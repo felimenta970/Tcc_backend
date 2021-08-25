@@ -11,13 +11,9 @@ namespace Tcc_backend.Models {
 
         public string Description { get; set; }
 
-        public Membro Membro { get; set; }
-
         public int MembroID { get; set; }
 
         public int ProjectManagerID { get; set; }
-
-        public ProjectManager ProjectManager { get; set; }
 
         public int SprintID { get; set; }
 
@@ -25,13 +21,8 @@ namespace Tcc_backend.Models {
 
         public Enums.UserStoryStatus Status { get; set; }
 
-        public Projeto Projeto { get; set; }
-
         public int ProjetoID { get; set; }
 
-        public List<Commit> Commits { get; set; }
-
-        public List<Anexo> Anexos { get; set; }
     }
 
     public class UserStoryModelCreate {
@@ -39,5 +30,18 @@ namespace Tcc_backend.Models {
         public string Description { get; set; }
 
         public int ProjetoID { get; set; }
+    }
+
+    public class UserStoryModelUpdate {
+
+        public int UserStoryID { get; set; }
+
+        public string Description { get; set; }
+
+        public int MembroID { get; set; }
+
+        public int SprintID { get; set; }
+
+        public Enums.UserStoryStatus Status { get; set; }
     }
 }

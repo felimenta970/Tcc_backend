@@ -43,6 +43,7 @@ namespace Tcc_backend.Business {
                 Description = model.Description,
                 ProjetoID = model.ProjetoID,
                 CreatedAt = DateTime.Now,
+                Status = Enums.UserStoryStatus.ToDo,
             };
 
             _databaseContext.UserStory.Add(userStory);
@@ -57,6 +58,7 @@ namespace Tcc_backend.Business {
             userStory.Description = model.Description;
             userStory.MembroID = model.MembroID;
             userStory.SprintID = model.SprintID;
+            userStory.Status = model.Status;
 
             _databaseContext.UserStory.Update(userStory);
 
@@ -69,6 +71,7 @@ namespace Tcc_backend.Business {
 
             _databaseContext.UserStory.Remove(userStory);
         }
+
 
     }
 }
