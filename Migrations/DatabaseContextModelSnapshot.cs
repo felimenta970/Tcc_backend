@@ -99,10 +99,15 @@ namespace Tcc_backend.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ProjectManagerID")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserStoryID")
                         .HasColumnType("int");
 
                     b.HasKey("MudancaID");
+
+                    b.HasIndex("ProjectManagerID");
 
                     b.HasIndex("UserStoryID");
 
@@ -140,7 +145,7 @@ namespace Tcc_backend.Migrations
                     b.Property<DateTime>("InitialDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 8, 24, 20, 18, 26, 710, DateTimeKind.Local).AddTicks(9516));
+                        .HasDefaultValue(new DateTime(2021, 8, 26, 0, 11, 44, 746, DateTimeKind.Local).AddTicks(8785));
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -192,7 +197,7 @@ namespace Tcc_backend.Migrations
                     b.Property<int>("ProjectManagerID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProjetoID")
+                    b.Property<int>("ProjetoID")
                         .HasColumnType("int");
 
                     b.Property<int>("SprintID")
@@ -238,11 +243,19 @@ namespace Tcc_backend.Migrations
 
             modelBuilder.Entity("Tcc_backend.Entities.Mudanca", b =>
                 {
+                    b.HasOne("Tcc_backend.Entities.ProjectManager", "ProjectManager")
+                        .WithMany()
+                        .HasForeignKey("ProjectManagerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Tcc_backend.Entities.UserStory", "UserStory")
                         .WithMany()
                         .HasForeignKey("UserStoryID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ProjectManager");
 
                     b.Navigation("UserStory");
                 });
@@ -274,7 +287,9 @@ namespace Tcc_backend.Migrations
 
                     b.HasOne("Tcc_backend.Entities.Projeto", "Projeto")
                         .WithMany("UserStories")
-                        .HasForeignKey("ProjetoID");
+                        .HasForeignKey("ProjetoID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Tcc_backend.Entities.Sprint", null)
                         .WithMany("UserStories")

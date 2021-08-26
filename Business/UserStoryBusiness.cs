@@ -47,6 +47,7 @@ namespace Tcc_backend.Business {
             };
 
             _databaseContext.UserStory.Add(userStory);
+            _databaseContext.SaveChanges();
 
             return userStory.UserStoryID;
         }
@@ -61,6 +62,7 @@ namespace Tcc_backend.Business {
             userStory.Status = model.Status;
 
             _databaseContext.UserStory.Update(userStory);
+            _databaseContext.SaveChanges();
 
             return userStory;
         }

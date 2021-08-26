@@ -20,6 +20,10 @@ namespace Tcc_backend.Entities {
 
         public DateTime DataModificacao { get; set; }
 
+        public int ProjectManagerID { get; set; }
+
+        [ForeignKey("ProjectManagerID")]
+        public ProjectManager ProjectManager { get; set; }
 
     }
 }

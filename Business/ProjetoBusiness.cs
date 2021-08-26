@@ -40,9 +40,7 @@ namespace Tcc_backend.Business {
 
             _databaseContext.SaveChanges();
 
-            var ID = 2;
-
-            return ID;
+            return projeto.ProjetoID;
 
         }
 
@@ -57,6 +55,8 @@ namespace Tcc_backend.Business {
 
 
             _databaseContext.Projeto.Update(projeto);
+
+            _databaseContext.SaveChanges();
 
             return projeto;
         }
