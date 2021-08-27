@@ -44,7 +44,7 @@ namespace Tcc_backend.Business {
 
         }
 
-        public Projeto Update(ProjetoModel projetoModel) {
+        public Projeto Update(ProjetoModelUpdate projetoModel) {
 
             var projeto = this.Get(projetoModel.ProjetoID);
 
@@ -52,7 +52,6 @@ namespace Tcc_backend.Business {
             projeto.InitialDate = projetoModel.InitialDate;
             projeto.Title = projetoModel.Title;
             projeto.UrlGit = projetoModel.UrlGit;
-
 
             _databaseContext.Projeto.Update(projeto);
 

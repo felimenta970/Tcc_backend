@@ -24,7 +24,7 @@ namespace Tcc_backend.Service {
             return bProjeto.Adicionar(projetoModel);
         }
 
-        public Projeto Update(ProjetoModel projetoModel) {
+        public Projeto Update(ProjetoModelUpdate projetoModel) {
             ProjetoBusiness bProjeto = new ProjetoBusiness();
             return bProjeto.Update(projetoModel);
         }

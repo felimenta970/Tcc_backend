@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Tcc_backend.Business;
+using Tcc_backend.Entities;
 using Tcc_backend.Models;
 using Tcc_backend.Service;
 
@@ -16,7 +17,6 @@ namespace Tcc_backend.Controllers {
 
         ProjetoService sProjeto = new ProjetoService();
 
-
         [HttpGet]
         public List<ProjetoModel> List() {
 
@@ -25,13 +25,7 @@ namespace Tcc_backend.Controllers {
             List<ProjetoModel> listModel = new List<ProjetoModel>();
            
             foreach (var proj in projetoList) {
-                listModel.Add(new ProjetoModel() {
-                    ProjetoID = proj.ProjetoID,
-                    Title = proj.Title,
-                    Description = proj.Description,
-                    InitialDate = proj.InitialDate,
-                    UrlGit = proj.UrlGit,
-                });
+                listModel.Add(this.EntityToModel(proj));
             }
 
             return listModel;
@@ -43,30 +37,36 @@ namespace Tcc_backend.Controllers {
 
             var proj = sProjeto.Get(ProjetoID);
 
-            ProjetoModel projetoModel = new ProjetoModel() {
-                ProjetoID = proj.ProjetoID,
-                Title = proj.Title,
-                Description = proj.Description,
-                InitialDate = proj.InitialDate,
-                UrlGit = proj.UrlGit,
-            };
-
-            return projetoModel;
+            return this.EntityToModel(proj);
+            
         }
 
         [HttpPost]
         public int Adicionar([FromBody] ProjetoModelCreate projeto) {
 
-            var id = sProjeto.Adicionar(projeto);
+            return sProjeto.Adicionar(projeto);
 
-            return id;
         }
 
         [HttpPut]
-        public ProjetoModel Put([FromBody] ProjetoModel projeto) {
+        public ProjetoModel Put([FromBody] ProjetoModelUpdate projeto) {
 
+            var updatedProjeto = sProjeto.Update(projeto);
+            return EntityToModel(updatedProjeto);
 
-            return new ProjetoModel();
+        }
+
+        public ProjetoModel EntityToModel(Projeto projeto) {
+
+            ProjetoModel model = new ProjetoModel() {
+                ProjetoID = projeto.ProjetoID,
+                Title = projeto.Title,
+                Description = projeto.Description,
+                InitialDate = projeto.InitialDate,
+                UrlGit = projeto.UrlGit,
+            };
+
+            return model;
         }
 
     }

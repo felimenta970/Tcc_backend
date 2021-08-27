@@ -29,4 +29,18 @@ namespace Tcc_backend.Models {
         public string UrlGit { get; set; }
 
     }
+
+    public class ProjetoModelUpdate {
+
+        public int ProjetoID { get; set; }
+
+        public string Title { get; set; }
+
+        public string Description { get; set; }
+
+        public DateTime InitialDate { get; set; }
+
+        public string UrlGit { get; set; }
+
+    }
 }
