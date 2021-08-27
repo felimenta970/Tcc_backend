@@ -63,9 +63,13 @@ namespace Tcc_backend.Business {
 
         public void Delete(int ProjetoID) {
 
-            var projeto = this.Get(ProjetoID);
+            Projeto projeto = new Projeto() {
+                ProjetoID = ProjetoID,
+            };
 
+            _databaseContext.Projeto.Attach(projeto);
             _databaseContext.Projeto.Remove(projeto);
+            _databaseContext.SaveChanges();
 
         }
 

@@ -27,5 +27,17 @@ namespace Tcc_backend.Business {
 
             return mudanca.MudancaID;
         }
+
+        public void Delete(int MudancaID) {
+
+            Mudanca mudanca = new Mudanca() {
+                MudancaID = MudancaID,
+            };
+
+            _databaseContext.Mudanca.Attach(mudanca);
+            _databaseContext.Mudanca.Remove(mudanca);
+            _databaseContext.SaveChanges();
+
+        }
     }
 }

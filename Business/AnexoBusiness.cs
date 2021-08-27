@@ -43,5 +43,16 @@ namespace Tcc_backend.Business {
 
             return anexo.AnexoID;
         }
+
+        public void Delete(int UserStoryID) {
+
+            Anexo anexo = new Anexo() {
+                UserStoryID = UserStoryID,
+            };
+
+            _databaseContext.Anexo.Attach(anexo);
+            _databaseContext.Anexo.Remove(anexo);
+            _databaseContext.SaveChanges();
+        }
     }
 }

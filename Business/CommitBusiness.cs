@@ -42,5 +42,16 @@ namespace Tcc_backend.Business {
 
             return commit.CommitID;
         }
+
+        public void Delete(int CommitID) {
+
+            Commit commit = new Commit() {
+                CommitID = CommitID,
+            };
+
+            _databaseContext.Commit.Attach(commit);
+            _databaseContext.Commit.Remove(commit);
+            _databaseContext.SaveChanges();
+        }
     }
 }

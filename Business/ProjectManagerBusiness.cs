@@ -5,9 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Tcc_backend.Business {
-    public class ProjectManagerBusiness : Controller {
-        public IActionResult Index() {
-            return View();
-        }
+    public class ProjectManagerBusiness {
+
     }
 }

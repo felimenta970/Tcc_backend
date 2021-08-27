@@ -69,9 +69,13 @@ namespace Tcc_backend.Business {
 
         public void Delete(int UserStoryID) {
 
-            var userStory = this.Get(UserStoryID);
+            UserStory userStory = new UserStory() {
+                UserStoryID = UserStoryID,
+            };
 
+            _databaseContext.UserStory.Attach(userStory);
             _databaseContext.UserStory.Remove(userStory);
+            _databaseContext.SaveChanges();
         }
 
 
