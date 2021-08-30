@@ -9,17 +9,17 @@ namespace Tcc_backend.Service {
     public class MudancaService {
 
         public List<Mudanca> ListByUserStoryID(int UserStoryID) {
-            MudancaBusiness bMudanca = new MudancaBusiness();
+            MudancaDao bMudanca = new MudancaDao();
             return bMudanca.ListByUserStoryID(UserStoryID);
         }
 
         public int Adicionar(Mudanca mudanca) {
-            MudancaBusiness bMudanca = new MudancaBusiness();
+            MudancaDao bMudanca = new MudancaDao();
             return bMudanca.Adicionar(mudanca);
         }
 
         public void Delete(int MudancaID) {
-            MudancaBusiness bMudanca = new MudancaBusiness();
+            MudancaDao bMudanca = new MudancaDao();
             bMudanca.Delete(MudancaID);
         }
     }

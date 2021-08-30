@@ -2,39 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Tcc_backend.DataBaseConfig;
 using Tcc_backend.Entities;
 using Tcc_backend.Models;
 
 namespace Tcc_backend.Business {
     public class UserStoryBusiness {
 
-        DatabaseContext _databaseContext = new DatabaseContext();
+        UserStoryDao _dao = new UserStoryDao();
 
         public UserStory Get(int UserStoryID) {
-
-            var userStory = _databaseContext.UserStory
-                .Where(x => x.UserStoryID == UserStoryID).FirstOrDefault();
-
-            return userStory;
+            return _dao.Get(UserStoryID);
         }
 
         public List<UserStory> ListByProjeto(int ProjetoID) {
-
-            var userStories = _databaseContext.UserStory
-                .Where(x => x.ProjetoID == ProjetoID).ToList();
-
-            return userStories;
-
+            return _dao.ListByProjeto(ProjetoID);
         }
 
         public List<UserStory> ListByMembro(int MembroID) {
-
-            var userStories = _databaseContext.UserStory
-                .Where(x => x.MembroID == MembroID).ToList();
-
-            return userStories;
-
+            return _dao.ListByMembro(MembroID);
         }
 
         public int Adicionar(UserStoryModelCreate model) {
@@ -46,25 +31,19 @@ namespace Tcc_backend.Business {
                 Status = Enums.UserStoryStatus.ToDo,
             };
 
-            _databaseContext.UserStory.Add(userStory);
-            _databaseContext.SaveChanges();
-
-            return userStory.UserStoryID;
+            return _dao.Adicionar(userStory);
         }
 
         public UserStory Update(UserStoryModelUpdate model) {
 
-            var userStory = this.Get(model.UserStoryID);
+            var userStory = _dao.Get(model.UserStoryID);
 
             userStory.Description = model.Description;
             userStory.MembroID = model.MembroID;
             userStory.SprintID = model.SprintID;
             userStory.Status = model.Status;
 
-            _databaseContext.UserStory.Update(userStory);
-            _databaseContext.SaveChanges();
-
-            return userStory;
+            return _dao.Update(userStory);
         }
 
         public void Delete(int UserStoryID) {
@@ -73,11 +52,7 @@ namespace Tcc_backend.Business {
                 UserStoryID = UserStoryID,
             };
 
-            _databaseContext.UserStory.Attach(userStory);
-            _databaseContext.UserStory.Remove(userStory);
-            _databaseContext.SaveChanges();
+            _dao.Delete(userStory);
         }
-
-
     }
 }

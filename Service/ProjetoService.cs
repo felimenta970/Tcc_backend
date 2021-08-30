@@ -10,22 +10,22 @@ namespace Tcc_backend.Service {
     public class ProjetoService {
 
         public List<Projeto> List() {
-            ProjetoBusiness bProjeto = new ProjetoBusiness();
+            ProjetoDao bProjeto = new ProjetoDao();
             return bProjeto.List();
         }
 
         public Projeto Get(int ProjetoID) {
-            ProjetoBusiness bProjeto = new ProjetoBusiness();
+            ProjetoDao bProjeto = new ProjetoDao();
             return bProjeto.Get(ProjetoID);
         }
 
         public int Adicionar(ProjetoModelCreate projetoModel) {
-            ProjetoBusiness bProjeto = new ProjetoBusiness();
+            ProjetoDao bProjeto = new ProjetoDao();
             return bProjeto.Adicionar(projetoModel);
         }
 
         public Projeto Update(ProjetoModelUpdate projetoModel) {
-            ProjetoBusiness bProjeto = new ProjetoBusiness();
+            ProjetoDao bProjeto = new ProjetoDao();
             return bProjeto.Update(projetoModel);
         }
     }

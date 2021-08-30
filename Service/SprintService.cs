@@ -10,27 +10,27 @@ namespace Tcc_backend.Service {
     public class SprintService {
 
         public List<Sprint> ListByProjeto(int ProjetoID) {
-            SprintBusiness bSprint = new SprintBusiness();
+            SprintDao bSprint = new SprintDao();
             return bSprint.ListByProjeto(ProjetoID);
         }
 
         public Sprint Get(int SprintID) {
-            SprintBusiness bSprint = new SprintBusiness();
+            SprintDao bSprint = new SprintDao();
             return bSprint.Get(SprintID);
         }
 
         public int Adicionar(SprintModelCreate model) {
-            SprintBusiness bSprint = new SprintBusiness();
+            SprintDao bSprint = new SprintDao();
             return bSprint.Adicionar(model);
         }
 
         public Sprint Update(SprintModelUpdate model) {
-            SprintBusiness bSprint = new SprintBusiness();
+            SprintDao bSprint = new SprintDao();
             return bSprint.Update(model);
         }
 
         public void Delete(int SprintID) {
-            SprintBusiness bSprint = new SprintBusiness();
+            SprintDao bSprint = new SprintDao();
             bSprint.Delete(SprintID);
         }
     }

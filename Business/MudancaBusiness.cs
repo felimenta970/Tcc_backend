@@ -1,43 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Tcc_backend.DataBaseConfig;
 using Tcc_backend.Entities;
 
 namespace Tcc_backend.Business {
     public class MudancaBusiness {
 
-        DatabaseContext _databaseContext = new DatabaseContext();
+        MudancaDao _dao = new MudancaDao();
 
         public List<Mudanca> ListByUserStoryID(int UserStoryID) {
-
-            var mudancas = _databaseContext.Mudanca
-                .Where(x => x.UserStoryID == UserStoryID).ToList();
-
-            return mudancas;
+            return _dao.ListByUserStoryID(UserStoryID);
         }
 
         public int Adicionar(Mudanca mudanca) {
-
-            _databaseContext.Mudanca.Add(mudanca);
-
-            _databaseContext.SaveChanges();
-
-            return mudanca.MudancaID;
+            return _dao.Adicionar(mudanca);
         }
 
-        public void Delete(int MudancaID) {
+        public void Delete(int mudancaID) {
 
             Mudanca mudanca = new Mudanca() {
-                MudancaID = MudancaID,
+                MudancaID = mudancaID,
             };
 
-            _databaseContext.Mudanca.Attach(mudanca);
-            _databaseContext.Mudanca.Remove(mudanca);
-            _databaseContext.SaveChanges();
-
+            _dao.Delete(mudanca);
         }
     }
 }

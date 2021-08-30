@@ -2,29 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Tcc_backend.Business.Base;
-using Tcc_backend.DataBaseConfig;
 using Tcc_backend.Entities;
 using Tcc_backend.Models;
 
 namespace Tcc_backend.Business {
-    public class ProjetoBusiness : BusinessBase {
+    public class ProjetoBusiness {
 
-        DatabaseContext _databaseContext = new DatabaseContext();
-
-        public List<Projeto> List() {
-
-            var projetos = _databaseContext.Projeto.ToList();
-
-            return projetos;
-        }
+        ProjetoDao _dao = new ProjetoDao();
 
         public Projeto Get(int ProjetoID) {
+            return _dao.Get(ProjetoID);
+        }
 
-            var projeto = _databaseContext.Projeto
-                .Where(x => x.ProjetoID == ProjetoID).FirstOrDefault();
-
-            return projeto;
+        public List<Projeto> List() {
+            return _dao.List();
         }
 
         public int Adicionar(ProjetoModelCreate projetoModel) {
@@ -36,28 +27,19 @@ namespace Tcc_backend.Business {
                 UrlGit = projetoModel.UrlGit,
             };
 
-            _databaseContext.Projeto.Add(projeto);
-
-            _databaseContext.SaveChanges();
-
-            return projeto.ProjetoID;
-
+            return _dao.Adicionar(projeto);
         }
 
         public Projeto Update(ProjetoModelUpdate projetoModel) {
 
-            var projeto = this.Get(projetoModel.ProjetoID);
+            var projeto = _dao.Get(projetoModel.ProjetoID);
 
             projeto.Description = projetoModel.Description;
             projeto.InitialDate = projetoModel.InitialDate;
             projeto.Title = projetoModel.Title;
             projeto.UrlGit = projetoModel.UrlGit;
 
-            _databaseContext.Projeto.Update(projeto);
-
-            _databaseContext.SaveChanges();
-
-            return projeto;
+            return _dao.Update(projeto);
         }
 
         public void Delete(int ProjetoID) {
@@ -66,11 +48,8 @@ namespace Tcc_backend.Business {
                 ProjetoID = ProjetoID,
             };
 
-            _databaseContext.Projeto.Attach(projeto);
-            _databaseContext.Projeto.Remove(projeto);
-            _databaseContext.SaveChanges();
+            _dao.Delete(projeto);
 
         }
-
     }
 }

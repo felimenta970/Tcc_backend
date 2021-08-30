@@ -27,7 +27,5 @@ namespace Tcc_backend.Models {
 
         public string Title { get; set; }
 
-        public int ProjetoID { get; set; }
-
     }
 }

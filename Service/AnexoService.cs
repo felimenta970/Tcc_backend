@@ -11,22 +11,22 @@ namespace Tcc_backend.Service {
     public class AnexoService {
 
         public Anexo Get(int AnexoID) {
-            AnexoBusiness bAnexo = new AnexoBusiness();
+            AnexoDao bAnexo = new AnexoDao();
             return bAnexo.Get(AnexoID);
         }
 
         public List<Anexo> ListByUserStoryID(int UserStoryID) {
-            AnexoBusiness bAnexo = new AnexoBusiness();
+            AnexoDao bAnexo = new AnexoDao();
             return bAnexo.ListByUserStoryId(UserStoryID);
         }
 
         public int Adicionar(AnexoModelCreate model) {
-            AnexoBusiness bAnexo = new AnexoBusiness();
+            AnexoDao bAnexo = new AnexoDao();
             return bAnexo.Adicionar(model);
         }
 
         public void Delete(int UserStoryID) {
-            AnexoBusiness bAnexo = new AnexoBusiness();
+            AnexoDao bAnexo = new AnexoDao();
             bAnexo.Delete(UserStoryID);
         }
 

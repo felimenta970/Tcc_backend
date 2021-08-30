@@ -1,32 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Tcc_backend.Business.Base;
-using Tcc_backend.DataBaseConfig;
 using Tcc_backend.Entities;
 using Tcc_backend.Models;
 
 namespace Tcc_backend.Business {
-    public class SprintBusiness : BusinessBase {
+    public class SprintBusiness {
 
-        DatabaseContext _databaseContext = new DatabaseContext();
-
-        public List<Sprint> ListByProjeto(int ProjetoID) {
-
-            var sprints = _databaseContext.Sprint
-                .Where(x => x.ProjetoID == ProjetoID).ToList();
-
-            return sprints;
-        }
+        SprintDao _dao = new SprintDao();
 
         public Sprint Get(int SprintID) {
+            return _dao.Get(SprintID);
+        }
 
-            var sprint = _databaseContext.Sprint
-                .Where(x => x.SprintID == SprintID).FirstOrDefault();
-
-            return sprint;
+        public List<Sprint> ListByProjeto(int ProjetoID) {
+            return _dao.ListByProjeto(ProjetoID);
         }
 
         public int Adicionar(SprintModelCreate model) {
@@ -36,22 +25,18 @@ namespace Tcc_backend.Business {
                 ProjetoID = model.ProjetoID,
             };
 
-            _databaseContext.Sprint.Add(sprint);
-            _databaseContext.SaveChanges();
+            return _dao.Adicionar(sprint);
 
-            return sprint.SprintID;
         }
 
         public Sprint Update(SprintModelUpdate model) {
 
-            var sprint = this.Get(model.SprintID);
+            var sprint = _dao.Get(model.SprintID);
 
             sprint.Title = model.Title;
 
-            _databaseContext.Sprint.Update(sprint);
-            _databaseContext.SaveChanges();
+            return _dao.Update(sprint);
 
-            return sprint;
         }
 
         public void Delete(int SprintID) {
@@ -60,10 +45,8 @@ namespace Tcc_backend.Business {
                 SprintID = SprintID,
             };
 
-            _databaseContext.Sprint.Attach(sprint);
-            _databaseContext.Sprint.Remove(sprint);
-            _databaseContext.SaveChanges();
-        }
+            _dao.Delete(sprint);
 
+        }
     }
 }

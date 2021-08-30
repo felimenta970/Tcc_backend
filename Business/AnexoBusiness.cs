@@ -1,35 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Tcc_backend.DataBaseConfig;
 using Tcc_backend.Entities;
 using Tcc_backend.Models;
 
 namespace Tcc_backend.Business {
     public class AnexoBusiness {
 
-        DatabaseContext _databaseContext = new DatabaseContext();
+        AnexoDao _dao = new AnexoDao();
 
         public Anexo Get(int AnexoID) {
-
-            var anexo = _databaseContext.Anexo
-                .Where(x => x.AnexoID == AnexoID).FirstOrDefault();
-
-            return anexo;
+            return _dao.Get(AnexoID);
         }
 
         public List<Anexo> ListByUserStoryId(int UserStoryID) {
-
-            var anexos = _databaseContext.Anexo
-                .Where(x => x.UserStoryID == UserStoryID).ToList();
-
-            return anexos;
+            return _dao.ListByUserStoryId(UserStoryID);
         }
 
         public int Adicionar(AnexoModelCreate model) {
-
             var anexo = new Anexo() {
                 Url = model.Url,
                 Name = model.Name,
@@ -37,11 +26,18 @@ namespace Tcc_backend.Business {
                 UserStoryID = model.UserStoryID,
             };
 
-            _databaseContext.Anexo.Add(anexo);
+            return _dao.Adicionar(anexo);
+        }
 
-            _databaseContext.SaveChanges();
+        public Anexo Update(AnexoModel model) {
 
-            return anexo.AnexoID;
+            var anexo = _dao.Get(model.AnexoID);
+
+            anexo.Name = model.Name;
+            anexo.TipoAnexo = model.TipoAnexo;
+            anexo.Url = model.Url;
+
+            return _dao.Update(anexo);
         }
 
         public void Delete(int UserStoryID) {
@@ -50,9 +46,8 @@ namespace Tcc_backend.Business {
                 UserStoryID = UserStoryID,
             };
 
-            _databaseContext.Anexo.Attach(anexo);
-            _databaseContext.Anexo.Remove(anexo);
-            _databaseContext.SaveChanges();
+            _dao.Delete(anexo);
         }
+
     }
 }

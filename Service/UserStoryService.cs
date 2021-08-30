@@ -10,32 +10,32 @@ namespace Tcc_backend.Service {
     public class UserStoryService {
 
         public UserStory Get(int UserStoryID) {
-            UserStoryBusiness bUserStory = new UserStoryBusiness();
+            UserStoryDao bUserStory = new UserStoryDao();
             return bUserStory.Get(UserStoryID);
         }
 
         public List<UserStory> ListByProjeto(int ProjetoID) {
-            UserStoryBusiness bUserStory = new UserStoryBusiness();
+            UserStoryDao bUserStory = new UserStoryDao();
             return bUserStory.ListByProjeto(ProjetoID);
         }
 
         public List<UserStory> ListByMembro(int MembroID) {
-            UserStoryBusiness bUserStory = new UserStoryBusiness();
+            UserStoryDao bUserStory = new UserStoryDao();
             return bUserStory.ListByMembro(MembroID);
         }
 
         public int Adicionar(UserStoryModelCreate model) {
-            UserStoryBusiness bUserStory = new UserStoryBusiness();
+            UserStoryDao bUserStory = new UserStoryDao();
             return bUserStory.Adicionar(model);
         }
 
         public UserStory Update(UserStoryModelUpdate model) {
-            UserStoryBusiness bUserStory = new UserStoryBusiness();
+            UserStoryDao bUserStory = new UserStoryDao();
             return bUserStory.Update(model);
         }
 
         public void Delete(int UserStoryID) {
-            UserStoryBusiness bUserStory = new UserStoryBusiness();
+            UserStoryDao bUserStory = new UserStoryDao();
             bUserStory.Delete(UserStoryID);
         }
     }

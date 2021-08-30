@@ -1,31 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Tcc_backend.DataBaseConfig;
 using Tcc_backend.Entities;
 using Tcc_backend.Models;
 
 namespace Tcc_backend.Business {
     public class CommitBusiness {
 
-        DatabaseContext _databaseContext = new DatabaseContext();
+        CommitDao _dao = new CommitDao();
 
         public Commit Get(int CommitID) {
-
-            var commit = _databaseContext.Commit
-                .Where(x => x.CommitID == CommitID).FirstOrDefault();
-
-            return commit;
+            return _dao.Get(CommitID);
         }
 
         public List<Commit> ListByUserStoryID(int UserStoryID) {
-
-            var commits = _databaseContext.Commit
-                .Where(x => x.UserStoryID == UserStoryID).ToList();
-
-            return commits;
+            return _dao.ListByUserStoryID(UserStoryID);
         }
 
         public int Adicionar(CommitModelCreate model) {
@@ -36,11 +26,7 @@ namespace Tcc_backend.Business {
                 UserStoryID = model.UserStoryID,
             };
 
-            var commitID = _databaseContext.Commit.Add(commit);
-
-            _databaseContext.SaveChanges();
-
-            return commit.CommitID;
+            return _dao.Adicionar(commit);
         }
 
         public void Delete(int CommitID) {
@@ -49,9 +35,7 @@ namespace Tcc_backend.Business {
                 CommitID = CommitID,
             };
 
-            _databaseContext.Commit.Attach(commit);
-            _databaseContext.Commit.Remove(commit);
-            _databaseContext.SaveChanges();
+            _dao.Delete(commit);
         }
     }
 }

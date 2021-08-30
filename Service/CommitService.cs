@@ -10,22 +10,22 @@ namespace Tcc_backend.Service {
     public class CommitService {
 
         public Commit Get(int CommitID) {
-            CommitBusiness bCommit = new CommitBusiness();
+            CommitDao bCommit = new CommitDao();
             return bCommit.Get(CommitID);
         }
 
         public List<Commit> ListByUserStoryID(int UserStoryID) {
-            CommitBusiness bCommit = new CommitBusiness();
+            CommitDao bCommit = new CommitDao();
             return bCommit.ListByUserStoryID(UserStoryID);
         }
 
         public int Adicionar(CommitModelCreate model) {
-            CommitBusiness bCommit = new CommitBusiness();
+            CommitDao bCommit = new CommitDao();
             return bCommit.Adicionar(model);
         }
 
         public void Delete(int CommitID) {
-            CommitBusiness bCommit = new CommitBusiness();
+            CommitDao bCommit = new CommitDao();
             bCommit.Delete(CommitID);
         }
     }
