@@ -10,33 +10,45 @@ namespace Tcc_backend.Service {
     public class UserStoryService {
 
         public UserStory Get(int UserStoryID) {
-            UserStoryDao bUserStory = new UserStoryDao();
+            UserStoryBusiness bUserStory = new UserStoryBusiness();
             return bUserStory.Get(UserStoryID);
         }
 
         public List<UserStory> ListByProjeto(int ProjetoID) {
-            UserStoryDao bUserStory = new UserStoryDao();
+            UserStoryBusiness bUserStory = new UserStoryBusiness();
             return bUserStory.ListByProjeto(ProjetoID);
         }
 
         public List<UserStory> ListByMembro(int MembroID) {
-            UserStoryDao bUserStory = new UserStoryDao();
+            UserStoryBusiness bUserStory = new UserStoryBusiness();
             return bUserStory.ListByMembro(MembroID);
         }
 
+        public List<UserStory> ListBySprint(int SprintID) {
+            UserStoryBusiness bUserStory = new UserStoryBusiness();
+            return bUserStory.ListBySprint(SprintID);
+        }
+
         public int Adicionar(UserStoryModelCreate model) {
-            UserStoryDao bUserStory = new UserStoryDao();
+            UserStoryBusiness bUserStory = new UserStoryBusiness();
             return bUserStory.Adicionar(model);
         }
 
         public UserStory Update(UserStoryModelUpdate model) {
-            UserStoryDao bUserStory = new UserStoryDao();
+            UserStoryBusiness bUserStory = new UserStoryBusiness();
             return bUserStory.Update(model);
         }
 
         public void Delete(int UserStoryID) {
-            UserStoryDao bUserStory = new UserStoryDao();
+            UserStoryBusiness bUserStory = new UserStoryBusiness();
             bUserStory.Delete(UserStoryID);
         }
+
+        public UserStoryModel EntityToModel(UserStory userStory) {
+            UserStoryBusiness bUserStory = new UserStoryBusiness();
+            return bUserStory.EntityToModel(userStory);
+        }
     }
+
+    
 }

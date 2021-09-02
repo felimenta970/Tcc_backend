@@ -28,6 +28,15 @@ namespace Tcc_backend.Business {
 
         }
 
+        public List<UserStory> ListBySprint(int SprintID) {
+
+            var userStories = _databaseContext.UserStory
+                .Where(x => x.SprintID == SprintID).ToList();
+
+            return userStories;
+
+        }
+
         public List<UserStory> ListByMembro(int MembroID) {
 
             var userStories = _databaseContext.UserStory
@@ -45,14 +54,7 @@ namespace Tcc_backend.Business {
             return userStory.UserStoryID;
         }
 
-        public UserStory Update(UserStoryModelUpdate model) {
-
-            var userStory = this.Get(model.UserStoryID);
-
-            userStory.Description = model.Description;
-            userStory.MembroID = model.MembroID;
-            userStory.SprintID = model.SprintID;
-            userStory.Status = model.Status;
+        public UserStory Update(UserStory userStory) {
 
             _databaseContext.UserStory.Update(userStory);
             _databaseContext.SaveChanges();
@@ -60,11 +62,7 @@ namespace Tcc_backend.Business {
             return userStory;
         }
 
-        public void Delete(int UserStoryID) {
-
-            UserStory userStory = new UserStory() {
-                UserStoryID = UserStoryID,
-            };
+        public void Delete(UserStory userStory) {
 
             _databaseContext.UserStory.Attach(userStory);
             _databaseContext.UserStory.Remove(userStory);

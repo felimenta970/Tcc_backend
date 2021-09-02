@@ -18,6 +18,10 @@ namespace Tcc_backend.Business {
             return _dao.ListByProjeto(ProjetoID);
         }
 
+        public List<UserStory> ListBySprint(int SprintID) {
+            return _dao.ListBySprint(SprintID);
+        }
+
         public List<UserStory> ListByMembro(int MembroID) {
             return _dao.ListByMembro(MembroID);
         }
@@ -54,5 +58,23 @@ namespace Tcc_backend.Business {
 
             _dao.Delete(userStory);
         }
+
+        public UserStoryModel EntityToModel(UserStory userStory) {
+
+            UserStoryModel model = new UserStoryModel() {
+                UserStoryID = userStory.UserStoryID,
+                Description = userStory.Description,
+                MembroID = userStory.MembroID,
+                ProjectManagerID = userStory.ProjectManagerID,
+                SprintID = userStory.SprintID,
+                CreatedAt = userStory.CreatedAt,
+                Status = userStory.Status,
+                ProjetoID = userStory.ProjetoID,
+            };
+
+            return model;
+        }
+
+
     }
 }

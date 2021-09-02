@@ -24,7 +24,7 @@ namespace Tcc_backend.Controllers {
             List<SprintModel> listModel = new List<SprintModel>();
 
             foreach (var sprint in sprintList) {
-                listModel.Add(this.EntityToModel(sprint));
+                listModel.Add(sSprint.EntityToModel(sprint));
             }
 
             return listModel;
@@ -36,7 +36,30 @@ namespace Tcc_backend.Controllers {
 
             var sprint = sSprint.Get(SprintID);
 
-            return this.EntityToModel(sprint);
+            return sSprint.EntityToModel(sprint);
+        }
+
+        [HttpGet]
+        [Route("userStories/{SprintID}")]
+        public IActionResult ListUserStories([FromRoute] int SprintID) {
+
+            UserStoryService sUserStory = new UserStoryService();
+            var userStoryList = sUserStory.ListBySprint(SprintID);
+
+            List<UserStoryModel> modelList = new List<UserStoryModel>();
+
+            foreach (var userStory in userStoryList) {
+
+                var model = sUserStory.EntityToModel(userStory);
+
+                modelList.Add(model);
+            }
+
+            if (modelList.Count == 0) {
+                return NotFound("Não foi possível encontrar nenhuma User Story para esse projeto");
+            }
+
+            return Ok(modelList);
         }
 
         [HttpPost]
@@ -49,7 +72,7 @@ namespace Tcc_backend.Controllers {
         public SprintModel Put([FromBody] SprintModelUpdate model) {
 
             var updatedSprint = sSprint.Update(model);
-            return EntityToModel(updatedSprint);
+            return sSprint.EntityToModel(updatedSprint);
         }
 
         [HttpDelete("{SprintID}")]
@@ -58,15 +81,5 @@ namespace Tcc_backend.Controllers {
             sSprint.Delete(SprintID);
         }
 
-        public SprintModel EntityToModel(Sprint sprint) {
-
-            SprintModel model = new SprintModel() {
-                SprintID = sprint.SprintID,
-                Title = sprint.Title,
-                ProjetoID = sprint.ProjetoID
-            };
-
-            return model;
-        }
     }
 }

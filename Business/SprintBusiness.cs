@@ -18,6 +18,7 @@ namespace Tcc_backend.Business {
             return _dao.ListByProjeto(ProjetoID);
         }
 
+
         public int Adicionar(SprintModelCreate model) {
 
             var sprint = new Sprint() {
@@ -47,6 +48,17 @@ namespace Tcc_backend.Business {
 
             _dao.Delete(sprint);
 
+        }
+
+        public SprintModel EntityToModel(Sprint sprint) {
+
+            SprintModel model = new SprintModel() {
+                SprintID = sprint.SprintID,
+                Title = sprint.Title,
+                ProjetoID = sprint.ProjetoID
+            };
+
+            return model;
         }
     }
 }

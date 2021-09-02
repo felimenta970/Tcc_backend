@@ -29,12 +29,7 @@ namespace Tcc_backend.Business {
             return sprint;
         }
 
-        public int Adicionar(SprintModelCreate model) {
-
-            var sprint = new Sprint() {
-                Title = model.Title,
-                ProjetoID = model.ProjetoID,
-            };
+        public int Adicionar(Sprint sprint) {
 
             _databaseContext.Sprint.Add(sprint);
             _databaseContext.SaveChanges();
@@ -42,11 +37,7 @@ namespace Tcc_backend.Business {
             return sprint.SprintID;
         }
 
-        public Sprint Update(SprintModelUpdate model) {
-
-            var sprint = this.Get(model.SprintID);
-
-            sprint.Title = model.Title;
+        public Sprint Update(Sprint sprint) {
 
             _databaseContext.Sprint.Update(sprint);
             _databaseContext.SaveChanges();
@@ -54,11 +45,7 @@ namespace Tcc_backend.Business {
             return sprint;
         }
 
-        public void Delete(int SprintID) {
-
-            Sprint sprint = new Sprint() {
-                SprintID = SprintID,
-            };
+        public void Delete(Sprint sprint) {
 
             _databaseContext.Sprint.Attach(sprint);
             _databaseContext.Sprint.Remove(sprint);

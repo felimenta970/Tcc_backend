@@ -21,46 +21,51 @@ namespace Tcc_backend.Controllers {
 
             var userStory = sUserStory.Get(UserStoryID);
 
-            var model = EntityToModel(userStory);
+            var model = sUserStory.EntityToModel(userStory);
 
             return model;
         }
 
         [HttpGet]
-        [Route("/listByProjeto/{ProjetoID}")]
-        public List<UserStoryModel> ListByProjeto([FromRoute] int ProjetoID) {
+        [Route("anexos/{UserStoryId}")]
+        public IActionResult ListAnexos([FromRoute] int UserStoryID) {
 
-            var userStoryList = sUserStory.ListByProjeto(ProjetoID);
+            AnexoService sAnexo = new AnexoService();
+            var anexos = sAnexo.ListByUserStoryID(UserStoryID);
 
-            List<UserStoryModel> modelList = new List<UserStoryModel>();
+            List<AnexoModel> listAnexos = new List<AnexoModel>();
 
-            foreach(var userStory in userStoryList) {
+            foreach(var anexo in anexos) {
 
-                var model = EntityToModel(userStory);
-
-                modelList.Add(model);
+                AnexoModel anexoModel = sAnexo.EntityToModel(anexo);
+                listAnexos.Add(anexoModel);
             }
 
-            return modelList;
-            
+            if (listAnexos.Count == 0)
+                return NotFound();
+
+            return Ok(listAnexos);
         }
 
         [HttpGet]
-        [Route("/listByMembro/{MembroID}")]
-        public List<UserStoryModel> ListByMembro([FromRoute] int MembroID) {
+        [Route("mudancas/{UserStoryID}")]
+        public IActionResult ListMudancas([FromRoute] int UserStoryID) {
 
-            var userStoryList = sUserStory.ListByMembro(MembroID);
+            MudancaService sMudanca = new MudancaService();
+            var mudancas = sMudanca.ListByUserStoryID(UserStoryID);
 
-            List<UserStoryModel> modelList = new List<UserStoryModel>();
+            List<MudancaModel> listMudancaModel = new List<MudancaModel>();
 
-            foreach (var userStory in userStoryList) {
+            foreach (var mudanca in mudancas) {
 
-                var model = EntityToModel(userStory);
-
-                modelList.Add(model);
+                var mudancaModel = sMudanca.EntitiyToModel(mudanca);
+                listMudancaModel.Add(mudancaModel);
             }
 
-            return modelList;
+            if (listMudancaModel.Count == 0)
+                return NoContent();
+
+            return Ok(listMudancaModel);
         }
 
         [HttpPost]
@@ -76,7 +81,7 @@ namespace Tcc_backend.Controllers {
 
             var userStory = sUserStory.Update(model);
 
-            var modelResult = this.EntityToModel(userStory);
+            var modelResult = sUserStory.EntityToModel(userStory);
 
             return modelResult;
 
@@ -90,25 +95,5 @@ namespace Tcc_backend.Controllers {
 
         }
 
-        public UserStory ModelToEntity(UserStoryModel model) {
-
-            return new UserStory();
-        }
-
-        public UserStoryModel EntityToModel(UserStory userStory) {
-
-            UserStoryModel model = new UserStoryModel() {
-                UserStoryID = userStory.UserStoryID,
-                Description = userStory.Description,
-                MembroID = userStory.MembroID,
-                ProjectManagerID = userStory.ProjectManagerID,
-                SprintID = userStory.SprintID,
-                CreatedAt = userStory.CreatedAt,
-                Status = userStory.Status,
-                ProjetoID = userStory.ProjetoID,
-            };
-
-            return model;
-        }
     }
 }

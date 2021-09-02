@@ -4,23 +4,29 @@ using System.Linq;
 using System.Threading.Tasks;
 using Tcc_backend.Business;
 using Tcc_backend.Entities;
+using Tcc_backend.Models;
 
 namespace Tcc_backend.Service {
     public class MudancaService {
 
         public List<Mudanca> ListByUserStoryID(int UserStoryID) {
-            MudancaDao bMudanca = new MudancaDao();
+            MudancaBusiness bMudanca = new MudancaBusiness();
             return bMudanca.ListByUserStoryID(UserStoryID);
         }
 
-        public int Adicionar(Mudanca mudanca) {
-            MudancaDao bMudanca = new MudancaDao();
+        public int Adicionar(MudancaModelCreate mudanca) {
+            MudancaBusiness bMudanca = new MudancaBusiness();
             return bMudanca.Adicionar(mudanca);
         }
 
         public void Delete(int MudancaID) {
-            MudancaDao bMudanca = new MudancaDao();
+            MudancaBusiness bMudanca = new MudancaBusiness();
             bMudanca.Delete(MudancaID);
+        }
+
+        public MudancaModel EntitiyToModel(Mudanca mudanca) {
+            MudancaBusiness bMudanca = new MudancaBusiness();
+            return bMudanca.EntityToModel(mudanca);
         }
     }
 }

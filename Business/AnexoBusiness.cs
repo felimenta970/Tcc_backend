@@ -49,5 +49,18 @@ namespace Tcc_backend.Business {
             _dao.Delete(anexo);
         }
 
+        public AnexoModel EntityToModel(Anexo anexo) {
+
+            AnexoModel anexoModel = new AnexoModel() {
+                AnexoID = anexo.AnexoID,
+                Url = anexo.Url,
+                Name = anexo.Name,
+                TipoAnexo = anexo.TipoAnexo,
+                UserStoryID = anexo.UserStoryID
+            };
+
+            return anexoModel;
+        }
+
     }
 }

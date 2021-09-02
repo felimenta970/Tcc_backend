@@ -51,5 +51,18 @@ namespace Tcc_backend.Business {
             _dao.Delete(projeto);
 
         }
+
+        public ProjetoModel EntityToModel(Projeto projeto) {
+
+            ProjetoModel model = new ProjetoModel() {
+                ProjetoID = projeto.ProjetoID,
+                Title = projeto.Title,
+                Description = projeto.Description,
+                InitialDate = projeto.InitialDate,
+                UrlGit = projeto.UrlGit,
+            };
+
+            return model;
+        }
     }
 }

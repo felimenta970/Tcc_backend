@@ -17,6 +17,8 @@ namespace Tcc_backend.Controllers {
 
         ProjetoService sProjeto = new ProjetoService();
 
+        UserStoryService sUserStory = new UserStoryService();
+
         [HttpGet]
         public List<ProjetoModel> List() {
 
@@ -25,7 +27,7 @@ namespace Tcc_backend.Controllers {
             List<ProjetoModel> listModel = new List<ProjetoModel>();
            
             foreach (var proj in projetoList) {
-                listModel.Add(this.EntityToModel(proj));
+                listModel.Add(sProjeto.EntityToModel(proj));
             }
 
             return listModel;
@@ -37,8 +39,30 @@ namespace Tcc_backend.Controllers {
 
             var proj = sProjeto.Get(ProjetoID);
 
-            return this.EntityToModel(proj);
+            return sProjeto.EntityToModel(proj);
             
+        }
+
+        [HttpGet]
+        [Route("userStories/{ProjetoID}")]
+        public IActionResult ListByProjeto([FromRoute] int ProjetoID) {
+
+            var userStoryList = sUserStory.ListByProjeto(ProjetoID);
+
+            List<UserStoryModel> modelList = new List<UserStoryModel>();
+
+            foreach (var userStory in userStoryList) {
+
+                var model = sUserStory.EntityToModel(userStory);
+
+                modelList.Add(model);
+            }
+
+            if (modelList.Count == 0) {
+                return NotFound("Não foi possível encontrar nenhuma User Story para esse projeto");
+            }
+
+            return Ok(modelList);
         }
 
         [HttpPost]
@@ -52,21 +76,8 @@ namespace Tcc_backend.Controllers {
         public ProjetoModel Put([FromBody] ProjetoModelUpdate projeto) {
 
             var updatedProjeto = sProjeto.Update(projeto);
-            return EntityToModel(updatedProjeto);
+            return sProjeto.EntityToModel(updatedProjeto);
 
-        }
-
-        public ProjetoModel EntityToModel(Projeto projeto) {
-
-            ProjetoModel model = new ProjetoModel() {
-                ProjetoID = projeto.ProjetoID,
-                Title = projeto.Title,
-                Description = projeto.Description,
-                InitialDate = projeto.InitialDate,
-                UrlGit = projeto.UrlGit,
-            };
-
-            return model;
         }
 
     }
