@@ -50,6 +50,8 @@ namespace Tcc_backend
 
             app.UseAuthorization();
 
+            app.UseCors(options => options.AllowAnyOrigin());
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

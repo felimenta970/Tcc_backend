@@ -40,14 +40,19 @@ namespace Tcc_backend.Business {
 
         public UserStory Update(UserStoryModelUpdate model) {
 
-            var userStory = _dao.Get(model.UserStoryID);
+            var userStory = _dao.Get(model.data.UserStoryID);
 
-            userStory.Description = model.Description;
-            userStory.MembroID = model.MembroID;
-            userStory.SprintID = model.SprintID;
-            userStory.Status = model.Status;
+            userStory.Description = model.data.Description;
+            userStory.MembroID = model.data.MembroID;
+            userStory.SprintID = model.data.SprintID;
+            userStory.Status = model.data.Status;
+
+            MudancaBusiness bMudanca = new MudancaBusiness();
+
+            bMudanca.Adicionar(model.mudanca);
 
             return _dao.Update(userStory);
+
         }
 
         public void Delete(int UserStoryID) {

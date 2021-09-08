@@ -35,10 +35,16 @@ namespace Tcc_backend.Controllers {
             return Ok(anexoId);
         }
 
-        [HttpPut]
-        public IActionResult Editar([FromBody] AnexoModel anexo) {
+        [HttpPut("{AnexoID}")]
+        public IActionResult Editar([FromBody] AnexoModelEdit anexo, [FromRoute] int AnexoID) {
 
-            return NotFound();
+            anexo.AnexoID = AnexoID;
+
+            var anexoAtualizado = sAnexo.Update(anexo);
+
+            var anexoModel = sAnexo.EntityToModel(anexoAtualizado);
+
+            return Ok(anexoModel);
         }
 
         [HttpDelete("{AnexoID}")]
@@ -46,7 +52,7 @@ namespace Tcc_backend.Controllers {
 
             sAnexo.Delete(AnexoID);
 
-            return Ok();
+            return NoContent();
         }
 
     }

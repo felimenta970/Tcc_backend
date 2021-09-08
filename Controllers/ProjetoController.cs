@@ -8,6 +8,7 @@ using Tcc_backend.Business;
 using Tcc_backend.Entities;
 using Tcc_backend.Models;
 using Tcc_backend.Service;
+using Newtonsoft.Json;
 
 namespace Tcc_backend.Controllers {
 
@@ -35,11 +36,13 @@ namespace Tcc_backend.Controllers {
 
         [HttpGet]
         [Route("{ProjetoID}")]
-        public ProjetoModel Get([FromRoute] int ProjetoID) {
+        public IActionResult Get([FromRoute] int ProjetoID) {
 
             var proj = sProjeto.Get(ProjetoID);
 
-            return sProjeto.EntityToModel(proj);
+            var json = JsonConvert.SerializeObject(sProjeto.EntityToModel(proj));
+
+            return Ok(json);
             
         }
 
@@ -72,8 +75,10 @@ namespace Tcc_backend.Controllers {
 
         }
 
-        [HttpPut]
-        public ProjetoModel Put([FromBody] ProjetoModelUpdate projeto) {
+        [HttpPut("{ProjetoID}")]
+        public ProjetoModel Put([FromBody] ProjetoModelUpdate projeto, [FromRoute] int ProjetoID) {
+
+            projeto.ProjetoID = ProjetoID;
 
             var updatedProjeto = sProjeto.Update(projeto);
             return sProjeto.EntityToModel(updatedProjeto);

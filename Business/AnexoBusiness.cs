@@ -29,7 +29,7 @@ namespace Tcc_backend.Business {
             return _dao.Adicionar(anexo);
         }
 
-        public Anexo Update(AnexoModel model) {
+        public Anexo Update(AnexoModelEdit model) {
 
             var anexo = _dao.Get(model.AnexoID);
 

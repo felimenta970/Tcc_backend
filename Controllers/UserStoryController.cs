@@ -76,8 +76,10 @@ namespace Tcc_backend.Controllers {
             return UserStoryID;
         }
 
-        [HttpPut]
-        public UserStoryModel Update([FromBody] UserStoryModelUpdate model) {
+        [HttpPut("{UserStoryID}")]
+        public UserStoryModel Update([FromBody] UserStoryModelUpdate model, [FromRoute] int UserStoryID) {
+
+            model.data.UserStoryID = UserStoryID;
 
             var userStory = sUserStory.Update(model);
 

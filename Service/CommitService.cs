@@ -28,5 +28,10 @@ namespace Tcc_backend.Service {
             CommitBusiness bCommit = new CommitBusiness();
             bCommit.Delete(CommitID);
         }
+
+        public CommitModel EntityToModel(Commit commit) {
+            CommitBusiness bCommit = new CommitBusiness();
+            return bCommit.EntityToModel(commit);
+        }
     }
 }

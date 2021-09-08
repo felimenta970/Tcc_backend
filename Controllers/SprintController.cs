@@ -68,8 +68,10 @@ namespace Tcc_backend.Controllers {
             return sSprint.Adicionar(model);
         }
 
-        [HttpPut]
-        public SprintModel Put([FromBody] SprintModelUpdate model) {
+        [HttpPut("{SprintID}")]
+        public SprintModel Put([FromBody] SprintModelUpdate model, [FromRoute] int SprintID) {
+
+            model.SprintID = SprintID;
 
             var updatedSprint = sSprint.Update(model);
             return sSprint.EntityToModel(updatedSprint);

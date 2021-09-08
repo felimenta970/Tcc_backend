@@ -37,5 +37,17 @@ namespace Tcc_backend.Business {
 
             _dao.Delete(commit);
         }
+
+        public CommitModel EntityToModel(Commit commit) {
+
+            CommitModel model = new CommitModel() {
+                CommitID = commit.CommitID,
+                Author = commit.Author,
+                Message = commit.Message,
+                UserStoryID = commit.UserStoryID,
+            };
+
+            return model;
+        }
     }
 }

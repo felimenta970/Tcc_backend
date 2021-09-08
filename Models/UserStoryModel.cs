@@ -34,6 +34,12 @@ namespace Tcc_backend.Models {
 
     public class UserStoryModelUpdate {
 
+        public UserStoryModelUpdateData data { get; set; }
+
+        public MudancaModelCreate mudanca { get; set; }
+    }
+
+    public class UserStoryModelUpdateData {
         public int UserStoryID { get; set; }
 
         public string Description { get; set; }
@@ -43,5 +49,7 @@ namespace Tcc_backend.Models {
         public int SprintID { get; set; }
 
         public Enums.UserStoryStatus Status { get; set; }
+
     }
 }
+

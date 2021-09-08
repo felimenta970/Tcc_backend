@@ -30,6 +30,11 @@ namespace Tcc_backend.Service {
             bAnexo.Delete(UserStoryID);
         }
 
+        public Anexo Update(AnexoModelEdit model) {
+            AnexoBusiness bAnexo = new AnexoBusiness();
+            return bAnexo.Update(model);
+        }
+
         public AnexoModel EntityToModel(Anexo anexo) {
             AnexoBusiness bAnexo = new AnexoBusiness();
             return bAnexo.EntityToModel(anexo);
