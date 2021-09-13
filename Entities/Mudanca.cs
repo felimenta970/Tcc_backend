@@ -16,6 +16,8 @@ namespace Tcc_backend.Entities {
 
         public int UserStoryID { get; set; }
 
+        public Enums.ChangeReason ChangeReason { get; set; } 
+
         public string Description { get; set; }
 
         public DateTime DataModificacao { get; set; }

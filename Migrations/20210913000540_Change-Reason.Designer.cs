@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tcc_backend.DataBaseConfig;
 
 namespace Tcc_backend.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210913000540_Change-Reason")]
+    partial class ChangeReason
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,9 +83,6 @@ namespace Tcc_backend.Migrations
                     b.Property<string>("Senha")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("MembroID");
 
                     b.ToTable("Membro");
@@ -133,9 +132,6 @@ namespace Tcc_backend.Migrations
                     b.Property<string>("Senha")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("ProjectManagerID");
 
                     b.ToTable("ProjectManager");
@@ -154,7 +150,7 @@ namespace Tcc_backend.Migrations
                     b.Property<DateTime>("InitialDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 9, 12, 23, 11, 29, 397, DateTimeKind.Local).AddTicks(7762));
+                        .HasDefaultValue(new DateTime(2021, 9, 12, 21, 5, 40, 136, DateTimeKind.Local).AddTicks(5656));
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");

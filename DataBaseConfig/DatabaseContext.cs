@@ -16,6 +16,7 @@ namespace Tcc_backend.DataBaseConfig {
         public DbSet<Projeto> Projeto { get; set; }
         public DbSet<Sprint> Sprint { get; set; }
         public DbSet<UserStory> UserStory { get; set; }
+        public DbSet<UsuarioProjeto> UsuarioProjeto { get; set; }
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
 

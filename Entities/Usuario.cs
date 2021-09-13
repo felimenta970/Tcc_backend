@@ -10,5 +10,8 @@ namespace Tcc_backend.Entities {
         public string Name { get; set; }
 
         public string Senha { get; set; }
+
+        public string Username { get; set; }
+
     }
 }

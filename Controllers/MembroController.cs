@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Tcc_backend.Entities;
 using Tcc_backend.Models;
 using Tcc_backend.Service;
 
@@ -35,5 +36,33 @@ namespace Tcc_backend.Controllers {
 
             return Ok(modelList);
         }
+
+        [HttpGet]
+        public IActionResult ListMembros() {
+
+            MembroService sMembro = new MembroService();
+
+            List<Membro> listEntity = sMembro.GetListMembros();
+            List<MembroModel> listModel = new List<MembroModel>();
+
+            if (listEntity.Count == 0) {
+                return NoContent();
+            }
+
+            foreach (var entity in listEntity) {
+                var modelItem = sMembro.EntityToModel(entity);
+                listModel.Add(modelItem);
+            }
+
+            return Ok(listModel);
+
+        }
+
+        [HttpPost]
+        public IActionResult CreateMember(MembroModelCreate model) {
+
+            return Ok();
+        }
     }
+
 }
