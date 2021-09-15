@@ -15,7 +15,14 @@ namespace Tcc_backend.Business {
 
             var membros = _databaseContext.Membro.ToList();
             return membros;
+
         }
 
+        public int Add(Membro membro) {
+
+            _databaseContext.Membro.Add(membro);
+            _databaseContext.SaveChanges();
+            return membro.MembroID;
+        }
     }
 }

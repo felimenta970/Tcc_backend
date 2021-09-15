@@ -30,7 +30,7 @@ namespace Tcc_backend.Business {
 
         public int Adicionar(Commit commit) {
 
-            var commitID = _databaseContext.Commit.Add(commit);
+            _databaseContext.Commit.Add(commit);
             _databaseContext.SaveChanges();
 
             return commit.CommitID;
