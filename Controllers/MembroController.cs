@@ -61,7 +61,11 @@ namespace Tcc_backend.Controllers {
         [HttpPost]
         public IActionResult CreateMember(MembroModelCreate model) {
 
-            return Ok();
+            MembroService sMembro = new MembroService();
+
+            var result = sMembro.CreateMember(model);
+
+            return Ok(result);
         }
     }
 

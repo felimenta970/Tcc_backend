@@ -25,12 +25,12 @@ namespace Tcc_backend.Controllers {
             var user = sUsuario.GetUsuario(model.username);
 
             if (user == null) {
-                return BadRequest(new { email = "no user with this email" });
+                return BadRequest(new { email = "Este username não existe" });
             }
 
             var passwordValid = sAuth.VerifyPassword(model.password, user.Senha);
             if (!passwordValid) {
-                return BadRequest(new { password = "invalid password" });
+                return BadRequest(new { password = "Senha inválida" });
             }
 
             var bearerToken = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");

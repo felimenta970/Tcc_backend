@@ -37,6 +37,16 @@ namespace Tcc_backend
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Tcc_backend", Version = "v1" });
             });
 
+            services.AddCors(options => {
+                options.AddPolicy("AllowAll", builder => {
+                    builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                        
+                });
+            });
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters {
@@ -62,6 +72,7 @@ namespace Tcc_backend
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -73,11 +84,11 @@ namespace Tcc_backend
 
             app.UseRouting();
 
+            app.UseCors("AllowAll");
+
             app.UseAuthorization();
 
             app.UseAuthentication();
-
-            app.UseCors(options => options.AllowAnyOrigin());
 
             app.UseEndpoints(endpoints =>
             {

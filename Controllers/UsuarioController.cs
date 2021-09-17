@@ -9,5 +9,8 @@ namespace Tcc_backend.Controllers {
     [Route("api/[controller]")]
     [ApiController]
     public class UsuarioController : ControllerBase {
+
+        //[HttpPost("createMember")]
+        //public IActionResult createMember()
     }
 }

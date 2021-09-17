@@ -16,5 +16,13 @@ namespace Tcc_backend.Models {
         public string Nome { get; set; }
 
         public string UserName { get; set; }
+
+    }
+
+    public class MembroModelCreateReturn {
+
+        public string Username { get; set; }
+
+        public string Password { get; set; }
     }
 }

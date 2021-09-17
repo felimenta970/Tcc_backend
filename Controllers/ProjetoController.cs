@@ -10,11 +10,13 @@ using Tcc_backend.Models;
 using Tcc_backend.Service;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 
 namespace Tcc_backend.Controllers {
 
     [Route("api/[controller]")]
     [Authorize(AuthenticationSchemes = "Bearer")]
+    [EnableCors]
     [ApiController]
     public class ProjetoController : ControllerBase {
 

@@ -26,5 +26,31 @@ namespace Tcc_backend.Business {
             return model;
         }
 
+        public MembroModelCreateReturn CreateMembro(MembroModelCreate model) {
+
+            Guid guid = Guid.NewGuid();
+            string randomPassword = Convert.ToBase64String(guid.ToByteArray());
+            randomPassword = randomPassword.Replace("=", "");
+
+            AuthBusiness bAuth = new AuthBusiness();
+
+            Usuario usuario = new Usuario() {
+                Name = model.Nome,
+                Username = model.UserName,
+                Senha = bAuth.HashPassword(randomPassword)
+            };
+
+            UsuarioBusiness bUsuario = new UsuarioBusiness();
+            bUsuario.CreateUser(usuario, false);
+
+            MembroModelCreateReturn response = new MembroModelCreateReturn() {
+                Username = model.UserName,
+                Password = randomPassword
+            };
+
+            return response;
+
+        }
+
     }
 }

@@ -18,5 +18,10 @@ namespace Tcc_backend.Service {
             MembroBusiness bMembro = new MembroBusiness();
             return bMembro.EntityToModel(membro);
         }
+
+        public MembroModelCreateReturn CreateMember(MembroModelCreate model) {
+            MembroBusiness bMembro = new MembroBusiness();
+            return bMembro.CreateMembro(model);
+        }
     }
 }
