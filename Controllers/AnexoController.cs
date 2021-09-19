@@ -35,18 +35,18 @@ namespace Tcc_backend.Controllers {
                 return BadRequest(ModelState);
 
             if (string.IsNullOrWhiteSpace(anexo.Name))
-                return BadRequest(new { Name = "O nome não pode estar vazio" });
+                return BadRequest(new { message = "O nome não pode estar vazio" });
 
             if (anexo.TipoAnexo == null)
-                return BadRequest(new { TipoAnexo = "É necessário definir o tipo de anexo" });
+                return BadRequest(new { message = "É necessário definir o tipo de anexo" });
 
             if (string.IsNullOrWhiteSpace(anexo.Url))
-                return BadRequest(new { Url = "A Url não pode estar vazia" });
+                return BadRequest(new { message = "A Url não pode estar vazia" });
 
             var userStoryID = sUserStory.Get(anexo.UserStoryID);
 
             if (userStoryID == null) {
-                return BadRequest(new { UserStoryID = "Esta UserStory não existe" });
+                return BadRequest(new { message = "Esta UserStory não existe" });
             }
 
             try {
@@ -66,13 +66,13 @@ namespace Tcc_backend.Controllers {
                 return BadRequest(ModelState);
 
             if (string.IsNullOrWhiteSpace(anexo.Name))
-                return BadRequest(new { Name = "O nome não pode estar vazio" });
+                return BadRequest(new { message = "O nome não pode estar vazio" });
 
             if (anexo.TipoAnexo == null)
-                return BadRequest(new { TipoAnexo = "É necessário definir o tipo de anexo" });
+                return BadRequest(new { message = "É necessário definir o tipo de anexo" });
 
             if (string.IsNullOrWhiteSpace(anexo.Url))
-                return BadRequest(new { Url = "A Url não pode estar vazia" });
+                return BadRequest(new { message = "A Url não pode estar vazia" });
 
             anexo.AnexoID = AnexoID;
 

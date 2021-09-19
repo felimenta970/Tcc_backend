@@ -78,10 +78,10 @@ namespace Tcc_backend.Controllers {
                 return BadRequest(ModelState);
 
             if (string.IsNullOrWhiteSpace(model.Nome))
-                return BadRequest(new { nome = "O campo 'nome' não pode estar vazio" });
+                return BadRequest(new { message = "O campo 'nome' não pode estar vazio" });
 
             if (string.IsNullOrWhiteSpace(model.UserName))
-                return BadRequest(new { username = "O campo 'username' não pode estar vazio" });
+                return BadRequest(new { message = "O campo 'username' não pode estar vazio" });
 
 
             try {
