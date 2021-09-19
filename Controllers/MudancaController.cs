@@ -17,7 +17,14 @@ namespace Tcc_backend.Controllers {
         [HttpPost]
         public IActionResult Create([FromBody] MudancaModelCreate model) {
 
-            var MudancaID = sMudanca.Adicionar(model);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            try {
+                var MudancaID = sMudanca.Adicionar(model);
+            }
+            catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
+            }
 
             return Ok();
         }

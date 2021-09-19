@@ -25,17 +25,22 @@ namespace Tcc_backend.Controllers {
         UserStoryService sUserStory = new UserStoryService();
 
         [HttpGet]
-        public List<ProjetoModel> List() {
+        public IActionResult List() {
 
-            var projetoList = sProjeto.List();
+            try {
+                var projetoList = sProjeto.List();
 
-            List<ProjetoModel> listModel = new List<ProjetoModel>();
-           
-            foreach (var proj in projetoList) {
-                listModel.Add(sProjeto.EntityToModel(proj));
+                List<ProjetoModel> listModel = new List<ProjetoModel>();
+
+                foreach (var proj in projetoList) {
+                    listModel.Add(sProjeto.EntityToModel(proj));
+                }
+
+                return Ok(listModel);
             }
-
-            return listModel;
+            catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
+            }
         }
 
         [HttpGet]
@@ -44,9 +49,13 @@ namespace Tcc_backend.Controllers {
 
             var proj = sProjeto.Get(ProjetoID);
 
-            var json = JsonConvert.SerializeObject(sProjeto.EntityToModel(proj));
+            if (proj != null) { 
+                return Ok(proj);
+            } else {
+                return NotFound();
+            }
 
-            return Ok(json);
+            
             
         }
 
@@ -54,38 +63,56 @@ namespace Tcc_backend.Controllers {
         [Route("userStories/{ProjetoID}")]
         public IActionResult ListByProjeto([FromRoute] int ProjetoID) {
 
-            var userStoryList = sUserStory.ListByProjeto(ProjetoID);
+            try {
+                var userStoryList = sUserStory.ListByProjeto(ProjetoID);
 
-            List<UserStoryModel> modelList = new List<UserStoryModel>();
+                if (userStoryList.Count == 0 && userStoryList == null) {
+                    return NotFound("Não foi possível encontrar nenhuma User Story para esse projeto");
+                }
 
-            foreach (var userStory in userStoryList) {
+                List<UserStoryModel> modelList = new List<UserStoryModel>();
 
-                var model = sUserStory.EntityToModel(userStory);
+                foreach (var userStory in userStoryList) {
 
-                modelList.Add(model);
+                    var model = sUserStory.EntityToModel(userStory);
+
+                    modelList.Add(model);
+                }
+
+                return Ok(modelList);
             }
-
-            if (modelList.Count == 0) {
-                return NotFound("Não foi possível encontrar nenhuma User Story para esse projeto");
+            catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
             }
-
-            return Ok(modelList);
         }
 
         [HttpPost]
-        public int Adicionar([FromBody] ProjetoModelCreate projeto) {
+        public IActionResult Adicionar([FromBody] ProjetoModelCreate projeto) {
 
-            return sProjeto.Adicionar(projeto);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try {
+                return Ok(sProjeto.Adicionar(projeto));
+            }
+            catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
+            }
 
         }
 
         [HttpPut("{ProjetoID}")]
-        public ProjetoModel Put([FromBody] ProjetoModelUpdate projeto, [FromRoute] int ProjetoID) {
+        public IActionResult Put([FromBody] ProjetoModelUpdate projeto, [FromRoute] int ProjetoID) {
 
-            projeto.ProjetoID = ProjetoID;
+            try {
+                projeto.ProjetoID = ProjetoID;
 
-            var updatedProjeto = sProjeto.Update(projeto);
-            return sProjeto.EntityToModel(updatedProjeto);
+                var updatedProjeto = sProjeto.Update(projeto);
+                return Ok(sProjeto.EntityToModel(updatedProjeto));
+            }
+            catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
+            }
 
         }
 

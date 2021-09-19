@@ -17,20 +17,28 @@ namespace Tcc_backend.Controllers {
         [HttpGet("{userStoryID}")]
         public IActionResult GetByUserStory([FromQuery] int UserStoryID) {
 
-            var commits = sCommit.ListByUserStoryID(UserStoryID);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            List<CommitModel> models = new List<CommitModel>();
-            foreach (var commit in commits) {
-                var model = sCommit.EntityToModel(commit);
-                models.Add(model);
+            try {
+                var commits = sCommit.ListByUserStoryID(UserStoryID);
+
+                if (commits.Count == 0) {
+                    return NotFound();
+                }
+
+                List<CommitModel> models = new List<CommitModel>();
+                foreach (var commit in commits) {
+                    var model = sCommit.EntityToModel(commit);
+                    models.Add(model);
+                }
+
+                return Ok(models);
+            }
+            catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
             }
 
-            if (models.Count == 0) {
-                return NotFound();
-            }
-
-            return Ok(models);
-            
         }
     }
 }

@@ -10,7 +10,6 @@ namespace Tcc_backend.Controllers {
     [ApiController]
     public class UsuarioController : ControllerBase {
 
-        //[HttpPost("createMember")]
-        //public IActionResult createMember()
+
     }
 }

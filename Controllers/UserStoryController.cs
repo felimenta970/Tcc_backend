@@ -17,13 +17,18 @@ namespace Tcc_backend.Controllers {
 
         [HttpGet]
         [Route("{UserStoryID}")]
-        public UserStoryModel Get([FromRoute] int UserStoryID) {
+        public IActionResult Get([FromRoute] int UserStoryID) {
 
             var userStory = sUserStory.Get(UserStoryID);
 
-            var model = sUserStory.EntityToModel(userStory);
+            if (userStory != null) {
 
-            return model;
+                var model = sUserStory.EntityToModel(userStory);
+
+                return Ok(model);
+            } else {
+                return NotFound();
+            }
         }
 
         [HttpGet]
@@ -31,20 +36,27 @@ namespace Tcc_backend.Controllers {
         public IActionResult ListAnexos([FromRoute] int UserStoryID) {
 
             AnexoService sAnexo = new AnexoService();
-            var anexos = sAnexo.ListByUserStoryID(UserStoryID);
 
-            List<AnexoModel> listAnexos = new List<AnexoModel>();
+            try {
+                var anexos = sAnexo.ListByUserStoryID(UserStoryID);
 
-            foreach(var anexo in anexos) {
+                if (anexos.Count == 0 || anexos == null) {
+                    return NotFound();
+                }
 
-                AnexoModel anexoModel = sAnexo.EntityToModel(anexo);
-                listAnexos.Add(anexoModel);
+                List<AnexoModel> listAnexos = new List<AnexoModel>();
+
+                foreach (var anexo in anexos) {
+
+                    AnexoModel anexoModel = sAnexo.EntityToModel(anexo);
+                    listAnexos.Add(anexoModel);
+                }
+
+                return Ok(listAnexos);
             }
-
-            if (listAnexos.Count == 0)
-                return NotFound();
-
-            return Ok(listAnexos);
+            catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
+            }
         }
 
         [HttpGet]
@@ -52,48 +64,78 @@ namespace Tcc_backend.Controllers {
         public IActionResult ListMudancas([FromRoute] int UserStoryID) {
 
             MudancaService sMudanca = new MudancaService();
-            var mudancas = sMudanca.ListByUserStoryID(UserStoryID);
 
-            List<MudancaModel> listMudancaModel = new List<MudancaModel>();
+            try {
+                var mudancas = sMudanca.ListByUserStoryID(UserStoryID);
 
-            foreach (var mudanca in mudancas) {
+                if (mudancas.Count == 0 || mudancas == null) {
+                    return NotFound();
+                }
 
-                var mudancaModel = sMudanca.EntitiyToModel(mudanca);
-                listMudancaModel.Add(mudancaModel);
+                List<MudancaModel> listMudancaModel = new List<MudancaModel>();
+
+                foreach (var mudanca in mudancas) {
+
+                    var mudancaModel = sMudanca.EntitiyToModel(mudanca);
+                    listMudancaModel.Add(mudancaModel);
+                }
+
+                return Ok(listMudancaModel);
             }
-
-            if (listMudancaModel.Count == 0)
-                return NoContent();
-
-            return Ok(listMudancaModel);
+            catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
+            }
         }
 
         [HttpPost]
-        public int Create([FromBody] UserStoryModelCreate model) {
+        public IActionResult Create([FromBody] UserStoryModelCreate model) {
 
-            int UserStoryID = sUserStory.Adicionar(model);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            return UserStoryID;
+            try {
+
+                int UserStoryID = sUserStory.Adicionar(model);
+
+                return Ok(UserStoryID);
+            }
+            catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
+            }
         }
 
         [HttpPut("{UserStoryID}")]
-        public UserStoryModel Update([FromBody] UserStoryModelUpdate model, [FromRoute] int UserStoryID) {
+        public IActionResult Update([FromBody] UserStoryModelUpdate model, [FromRoute] int UserStoryID) {
 
-            model.data.UserStoryID = UserStoryID;
+            if (!ModelState.IsValid)
+                return BadRequest();
 
-            var userStory = sUserStory.Update(model);
+            try {
+                model.data.UserStoryID = UserStoryID;
 
-            var modelResult = sUserStory.EntityToModel(userStory);
+                var userStory = sUserStory.Update(model);
 
-            return modelResult;
+                var modelResult = sUserStory.EntityToModel(userStory);
+
+                return Ok(modelResult);
+            }
+            catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
+            }
 
         }
 
         [HttpDelete]
         [Route("{UserStoryID}")]
-        public void Delete([FromRoute] int UserStoryID) {
+        public IActionResult Delete([FromRoute] int UserStoryID) {
 
-            sUserStory.Delete(UserStoryID);
+            try {
+                sUserStory.Delete(UserStoryID);
+                return NoContent();
+            }
+            catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
+            }
 
         }
 

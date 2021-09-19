@@ -17,26 +17,39 @@ namespace Tcc_backend.Controllers {
         SprintService sSprint = new SprintService();
 
         [HttpGet]
-        public List<SprintModel> List([FromQuery] int ProjetoID) {
+        public IActionResult List([FromQuery] int ProjetoID) {
 
-            var sprintList = sSprint.ListByProjeto(ProjetoID);
+            try {
+                var sprintList = sSprint.ListByProjeto(ProjetoID);
 
-            List<SprintModel> listModel = new List<SprintModel>();
+                if (sprintList.Count == 0 || sprintList == null) {
+                    return NotFound();
+                }
 
-            foreach (var sprint in sprintList) {
-                listModel.Add(sSprint.EntityToModel(sprint));
+                List<SprintModel> listModel = new List<SprintModel>();
+
+                foreach (var sprint in sprintList) {
+                    listModel.Add(sSprint.EntityToModel(sprint));
+                }
+
+                return Ok(listModel);
             }
-
-            return listModel;
+            catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
+            }
         }
 
         [HttpGet]
         [Route("{SprintID}")]
-        public SprintModel Get([FromRoute] int SprintID) {
+        public IActionResult Get([FromRoute] int SprintID) {
 
             var sprint = sSprint.Get(SprintID);
 
-            return sSprint.EntityToModel(sprint);
+            if (sprint != null) {
+                return Ok(sSprint.EntityToModel(sprint));
+            } else {
+                return NotFound();
+            }
         }
 
         [HttpGet]
@@ -44,43 +57,78 @@ namespace Tcc_backend.Controllers {
         public IActionResult ListUserStories([FromRoute] int SprintID) {
 
             UserStoryService sUserStory = new UserStoryService();
-            var userStoryList = sUserStory.ListBySprint(SprintID);
 
-            List<UserStoryModel> modelList = new List<UserStoryModel>();
+            try { 
+                var userStoryList = sUserStory.ListBySprint(SprintID);
 
-            foreach (var userStory in userStoryList) {
+                if (userStoryList.Count == 0 || userStoryList == null) {
+                    return NotFound();
+                }
 
-                var model = sUserStory.EntityToModel(userStory);
+                List<UserStoryModel> modelList = new List<UserStoryModel>();
 
-                modelList.Add(model);
+                foreach (var userStory in userStoryList) {
+
+                    var model = sUserStory.EntityToModel(userStory);
+
+                    modelList.Add(model);
+                }
+
+                return Ok(modelList);
             }
-
-            if (modelList.Count == 0) {
-                return NotFound("Não foi possível encontrar nenhuma User Story para esse projeto");
+            catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
             }
-
-            return Ok(modelList);
         }
 
         [HttpPost]
-        public int Adicionar([FromBody] SprintModelCreate model) {
+        public IActionResult Adicionar([FromBody] SprintModelCreate model) {
 
-            return sSprint.Adicionar(model);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try {
+
+                var idSprint = sSprint.Adicionar(model);
+
+                if (idSprint != null) {
+                    return Ok(idSprint);
+                } else {
+                    return StatusCode(500, "Erro de servidor");
+                }
+            }
+            catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
+            }
         }
 
         [HttpPut("{SprintID}")]
-        public SprintModel Put([FromBody] SprintModelUpdate model, [FromRoute] int SprintID) {
+        public IActionResult Put([FromBody] SprintModelUpdate model, [FromRoute] int SprintID) {
 
-            model.SprintID = SprintID;
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            var updatedSprint = sSprint.Update(model);
-            return sSprint.EntityToModel(updatedSprint);
+            try {
+                model.SprintID = SprintID;
+
+                var updatedSprint = sSprint.Update(model);
+                return Ok(sSprint.EntityToModel(updatedSprint));
+            }
+            catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
+            }
         }
 
         [HttpDelete("{SprintID}")]
-        public void Delete([FromRoute] int SprintID) {
+        public IActionResult Delete([FromRoute] int SprintID) {
 
-            sSprint.Delete(SprintID);
+            try {
+                sSprint.Delete(SprintID);
+                return Ok();
+            }
+            catch {
+                return StatusCode(500);
+            }
         }
 
     }

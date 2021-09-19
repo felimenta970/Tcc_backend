@@ -13,28 +13,36 @@ namespace Tcc_backend.Controllers {
     [ApiController]
     public class MembroController : ControllerBase {
 
+        UsuarioService sUsuario = new UsuarioService();
+
         [HttpGet]
         [Route("userStories/{MembroID}")]
         public IActionResult  ListByMembro([FromRoute] int MembroID) {
 
             UserStoryService sUserStory = new UserStoryService();
 
-            var userStoryList = sUserStory.ListByMembro(MembroID);
+            try {
+                var userStoryList = sUserStory.ListByMembro(MembroID);
 
-            List<UserStoryModel> modelList = new List<UserStoryModel>();
+                if (userStoryList.Count == 0) {
+                    return NotFound();
+                }
 
-            foreach (var userStory in userStoryList) {
+                List<UserStoryModel> modelList = new List<UserStoryModel>();
 
-                var model = sUserStory.EntityToModel(userStory);
+                foreach (var userStory in userStoryList) {
 
-                modelList.Add(model);
+                    var model = sUserStory.EntityToModel(userStory);
+
+                    modelList.Add(model);
+                }
+
+                return Ok(modelList);
+
             }
-
-            if (modelList.Count == 0) {
-                return NotFound();
+            catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
             }
-
-            return Ok(modelList);
         }
 
         [HttpGet]
@@ -42,30 +50,46 @@ namespace Tcc_backend.Controllers {
 
             MembroService sMembro = new MembroService();
 
-            List<Membro> listEntity = sMembro.GetListMembros();
-            List<MembroModel> listModel = new List<MembroModel>();
+            try {
+                List<Membro> listEntity = sMembro.GetListMembros();
+                List<MembroModel> listModel = new List<MembroModel>();
 
-            if (listEntity.Count == 0) {
-                return NoContent();
+                if (listEntity.Count == 0) {
+                    return NoContent();
+                }
+
+                foreach (var entity in listEntity) {
+                    var modelItem = sMembro.EntityToModel(entity);
+                    listModel.Add(modelItem);
+                }
+
+                return Ok(listModel);
             }
-
-            foreach (var entity in listEntity) {
-                var modelItem = sMembro.EntityToModel(entity);
-                listModel.Add(modelItem);
+            catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
             }
-
-            return Ok(listModel);
 
         }
 
         [HttpPost]
         public IActionResult CreateMember(MembroModelCreate model) {
 
-            MembroService sMembro = new MembroService();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            var result = sMembro.CreateMember(model);
+            try {
+                var uniqueUser = sUsuario.isUniqueUsername(model.UserName);
 
-            return Ok(result);
+                MembroService sMembro = new MembroService();
+
+                var result = sMembro.CreateMember(model);
+
+                return Ok(result);
+            }
+            catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
+            }
+
         }
     }
 

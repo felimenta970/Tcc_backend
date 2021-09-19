@@ -30,9 +30,16 @@ namespace Tcc_backend.Controllers {
         [HttpPost]
         public IActionResult Adicionar([FromBody] AnexoModelCreate anexo) {
 
-            var anexoId = sAnexo.Adicionar(anexo);
-
-            return Ok(anexoId);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            try {
+                var anexoId = sAnexo.Adicionar(anexo);
+                return Ok(anexoId);
+            }
+            catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
+            }
+            
         }
 
         [HttpPut("{AnexoID}")]
@@ -40,19 +47,29 @@ namespace Tcc_backend.Controllers {
 
             anexo.AnexoID = AnexoID;
 
-            var anexoAtualizado = sAnexo.Update(anexo);
+            try {
+                var anexoAtualizado = sAnexo.Update(anexo);
+                var anexoModel = sAnexo.EntityToModel(anexoAtualizado);
+                return Ok(anexoModel);
+            }
+            catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
+            }
 
-            var anexoModel = sAnexo.EntityToModel(anexoAtualizado);
-
-            return Ok(anexoModel);
         }
 
         [HttpDelete("{AnexoID}")]
         public IActionResult Delete(int AnexoID) {
 
-            sAnexo.Delete(AnexoID);
+            try {
+                sAnexo.Delete(AnexoID);
 
-            return NoContent();
+                return NoContent();
+            }
+            catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
+            }
+
         }
 
     }

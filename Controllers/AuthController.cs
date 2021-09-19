@@ -22,25 +22,31 @@ namespace Tcc_backend.Controllers {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var user = sUsuario.GetUsuario(model.username);
+            try {
+                var user = sUsuario.GetUsuario(model.username);
 
-            if (user == null) {
-                return BadRequest(new { email = "Este username não existe" });
+                if (user == null) {
+                    return BadRequest(new { email = "Este username não existe" });
+                }
+
+                var passwordValid = sAuth.VerifyPassword(model.password, user.Senha);
+                if (!passwordValid) {
+                    return BadRequest(new { password = "Senha inválida" });
+                }
+
+                var bearerToken = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
+
+                if (user.ProjectManagerID != null) {
+                    return sAuth.GetAuthData("iKC0yCHfjW4fiemBo44eK1OBpYplZ9e6", 2592000, user.ProjectManagerID.ToString());
+                }
+                else {
+                    return sAuth.GetAuthData("iKC0yCHfjW4fiemBo44eK1OBpYplZ9e6", 2592000, user.MembroID.ToString());
+                }
+            }
+            catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
             }
 
-            var passwordValid = sAuth.VerifyPassword(model.password, user.Senha);
-            if (!passwordValid) {
-                return BadRequest(new { password = "Senha inválida" });
-            }
-
-            var bearerToken = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
-
-            if (user.ProjectManagerID != null) {
-                return sAuth.GetAuthData("iKC0yCHfjW4fiemBo44eK1OBpYplZ9e6", 2592000, user.ProjectManagerID.ToString());
-            } else {
-                return sAuth.GetAuthData("iKC0yCHfjW4fiemBo44eK1OBpYplZ9e6", 2592000, user.MembroID.ToString());
-            }
-            
         }
 
         [HttpPost("register")]
