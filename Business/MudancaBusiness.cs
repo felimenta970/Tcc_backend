@@ -21,6 +21,7 @@ namespace Tcc_backend.Business {
                 Description = mudancaModel.Description,
                 DataModificacao = DateTime.Now,
                 ProjectManagerID = mudancaModel.ProjectManagerID,
+                ChangeReason = mudancaModel.ChangeReason
             };
 
             return _dao.Adicionar(mudanca);

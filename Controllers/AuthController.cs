@@ -19,6 +19,7 @@ namespace Tcc_backend.Controllers {
 
         [HttpPost("login")]
         public ActionResult<AuthData> Post([FromBody] LoginModel model) {
+
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 

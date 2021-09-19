@@ -93,6 +93,16 @@ namespace Tcc_backend.Controllers {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            if (string.IsNullOrWhiteSpace(model.Description))
+                return BadRequest(new { description = "O campo 'descrição' não pode estar vazio" });
+
+            ProjetoService sProjeto = new ProjetoService();
+
+            var projID = sProjeto.Get(model.ProjetoID);
+
+            if (projID == null || projID == default)
+                return BadRequest(new { projectID = "Este projeto não existe" });
+
             try {
 
                 int UserStoryID = sUserStory.Adicionar(model);
@@ -109,6 +119,15 @@ namespace Tcc_backend.Controllers {
 
             if (!ModelState.IsValid)
                 return BadRequest();
+
+            if (string.IsNullOrWhiteSpace(model.data.Description))
+                return BadRequest(new { description = "O campo 'descrição' não pode estar vazio" });
+
+            if (string.IsNullOrWhiteSpace(model.mudanca.Description))
+                return BadRequest(new { description = "O campo 'descrição' não pode estar vazio" });
+
+            if (model.mudanca.ChangeReason == null)
+                return BadRequest(new { changeReason = "O campo 'Razão de mudança' deve ser selecionado" });
 
             try {
                 model.data.UserStoryID = UserStoryID;

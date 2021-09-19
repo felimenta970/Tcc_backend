@@ -16,6 +16,7 @@ namespace Tcc_backend.Controllers {
     public class AnexoController : ControllerBase {
 
         AnexoService sAnexo = new AnexoService();
+        UserStoryService sUserStory = new UserStoryService();
 
         [HttpGet]
         [Route("{AnexoID}")]
@@ -32,6 +33,22 @@ namespace Tcc_backend.Controllers {
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            if (string.IsNullOrWhiteSpace(anexo.Name))
+                return BadRequest(new { Name = "O nome não pode estar vazio" });
+
+            if (anexo.TipoAnexo == null)
+                return BadRequest(new { TipoAnexo = "É necessário definir o tipo de anexo" });
+
+            if (string.IsNullOrWhiteSpace(anexo.Url))
+                return BadRequest(new { Url = "A Url não pode estar vazia" });
+
+            var userStoryID = sUserStory.Get(anexo.UserStoryID);
+
+            if (userStoryID == null) {
+                return BadRequest(new { UserStoryID = "Esta UserStory não existe" });
+            }
+
             try {
                 var anexoId = sAnexo.Adicionar(anexo);
                 return Ok(anexoId);
@@ -44,6 +61,18 @@ namespace Tcc_backend.Controllers {
 
         [HttpPut("{AnexoID}")]
         public IActionResult Editar([FromBody] AnexoModelEdit anexo, [FromRoute] int AnexoID) {
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (string.IsNullOrWhiteSpace(anexo.Name))
+                return BadRequest(new { Name = "O nome não pode estar vazio" });
+
+            if (anexo.TipoAnexo == null)
+                return BadRequest(new { TipoAnexo = "É necessário definir o tipo de anexo" });
+
+            if (string.IsNullOrWhiteSpace(anexo.Url))
+                return BadRequest(new { Url = "A Url não pode estar vazia" });
 
             anexo.AnexoID = AnexoID;
 

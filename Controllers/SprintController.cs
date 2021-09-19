@@ -87,8 +87,17 @@ namespace Tcc_backend.Controllers {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            try {
+            if (string.IsNullOrWhiteSpace(model.Title))
+                return BadRequest(new { title = "O campo 'título' não pode estar vazio" });
 
+            ProjetoService sProjeto = new ProjetoService();
+
+            var projID = sProjeto.Get(model.ProjetoID);
+
+            if (projID == null || projID == default)
+                return BadRequest(new { projectID = "Este projeto não existe" });
+
+            try {
                 var idSprint = sSprint.Adicionar(model);
 
                 if (idSprint != null) {
@@ -107,6 +116,9 @@ namespace Tcc_backend.Controllers {
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            if (string.IsNullOrWhiteSpace(model.Title))
+                return BadRequest(new { title = "O campo 'título' não pode estar vazio" });
 
             try {
                 model.SprintID = SprintID;

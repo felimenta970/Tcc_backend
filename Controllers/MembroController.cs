@@ -77,6 +77,13 @@ namespace Tcc_backend.Controllers {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            if (string.IsNullOrWhiteSpace(model.Nome))
+                return BadRequest(new { nome = "O campo 'nome' não pode estar vazio" });
+
+            if (string.IsNullOrWhiteSpace(model.UserName))
+                return BadRequest(new { username = "O campo 'username' não pode estar vazio" });
+
+
             try {
                 var uniqueUser = sUsuario.isUniqueUsername(model.UserName);
 
