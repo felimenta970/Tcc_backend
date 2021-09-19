@@ -21,10 +21,10 @@ namespace Tcc_backend.Controllers {
                 return BadRequest(ModelState);
 
             if (string.IsNullOrWhiteSpace(model.Description))
-                return BadRequest(new { description = "O campo 'descrição' não pode estar vazio" });
+                return BadRequest(new { message = "O campo 'descrição' não pode estar vazio" });
 
             if (model.ChangeReason == null)
-                return BadRequest(new { changeReason = "O campo 'Razão de mudança' deve ser selecionado" });
+                return BadRequest(new { message = "O campo 'Razão de mudança' deve ser selecionado" });
 
             try {
                 var MudancaID = sMudanca.Adicionar(model);

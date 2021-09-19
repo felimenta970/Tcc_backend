@@ -27,12 +27,12 @@ namespace Tcc_backend.Controllers {
                 var user = sUsuario.GetUsuario(model.username);
 
                 if (user == null) {
-                    return BadRequest(new { email = "Este username não existe" });
+                    return BadRequest(new { message = "Este username não existe" });
                 }
 
                 var passwordValid = sAuth.VerifyPassword(model.password, user.Senha);
                 if (!passwordValid) {
-                    return BadRequest(new { password = "Senha inválida" });
+                    return BadRequest(new { message = "Senha inválida" });
                 }
 
                 var bearerToken = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
@@ -58,7 +58,7 @@ namespace Tcc_backend.Controllers {
             var uniqueUser = sUsuario.isUniqueUsername(model.username);
 
             if (!uniqueUser)
-                return BadRequest(new { username = "Um usuário com este username já existe" });
+                return BadRequest(new { message = "Um usuário com este username já existe" });
             
 
             var user = new Usuario {

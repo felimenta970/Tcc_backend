@@ -91,10 +91,10 @@ namespace Tcc_backend.Controllers {
                 return BadRequest(ModelState);
 
             if (string.IsNullOrWhiteSpace(projeto.Description))
-                return BadRequest(new { description = "O campo 'descrição' não pode estar vazio" });
+                return BadRequest(new { message = "O campo 'descrição' não pode estar vazio" });
 
             if (string.IsNullOrWhiteSpace(projeto.Title))
-                return BadRequest(new { title = "O campo 'título' não pode estar vazio" });
+                return BadRequest(new { message = "O campo 'título' não pode estar vazio" });
 
             try {
                 return Ok(sProjeto.Adicionar(projeto));
@@ -112,10 +112,10 @@ namespace Tcc_backend.Controllers {
                 return BadRequest(ModelState);
 
             if (string.IsNullOrWhiteSpace(projeto.Description))
-                return BadRequest(new { description = "O campo 'descrição' não pode estar vazio" });
+                return BadRequest(new { message = "O campo 'descrição' não pode estar vazio" });
 
             if (string.IsNullOrWhiteSpace(projeto.Title))
-                return BadRequest(new { title = "O campo 'título' não pode estar vazio" });
+                return BadRequest(new { message = "O campo 'título' não pode estar vazio" });
 
             try {
                 projeto.ProjetoID = ProjetoID;
