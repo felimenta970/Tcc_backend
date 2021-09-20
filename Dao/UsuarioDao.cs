@@ -58,5 +58,37 @@ namespace Tcc_backend.Business {
                 return membro.MembroID;
             }
         }
+
+        public void AssociaMembroProjeto(List<int> membros, int ProjetoID) {
+
+            foreach(var membro in membros) {
+                var userProjeto = this.CriaUserProjeto(ProjetoID, membro, false);
+                _databaseContext.Add(userProjeto);
+            }
+
+            _databaseContext.SaveChanges();
+        }
+
+        public void AssociaManagerProjeto(int projectManagerID, int ProjetoID) {
+
+            var userProjeto = this.CriaUserProjeto(ProjetoID, projectManagerID, true);
+            _databaseContext.Add(userProjeto);
+
+
+            _databaseContext.SaveChanges();
+        }
+
+        public UsuarioProjeto CriaUserProjeto(int ProjetoID, int UsuarioID, bool isProjectManager) {
+
+            UsuarioProjeto userProjeto = new UsuarioProjeto() {
+                ProjetoID = ProjetoID,
+                UsuarioID = UsuarioID,
+                isProjectManager = isProjectManager,
+            };
+
+            return userProjeto;
+
+
+        }
     }
 }

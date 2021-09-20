@@ -38,10 +38,14 @@ namespace Tcc_backend.Controllers {
                 var bearerToken = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
 
                 if (user.ProjectManagerID != null) {
-                    return sAuth.GetAuthData("iKC0yCHfjW4fiemBo44eK1OBpYplZ9e6", 2592000, user.ProjectManagerID.ToString());
+                    var authData = sAuth.GetAuthData("iKC0yCHfjW4fiemBo44eK1OBpYplZ9e6", 2592000, user.ProjectManagerID.ToString());
+                    authData.isProjectManager = true;
+                    return authData;
                 }
                 else {
-                    return sAuth.GetAuthData("iKC0yCHfjW4fiemBo44eK1OBpYplZ9e6", 2592000, user.MembroID.ToString());
+                    var authData = sAuth.GetAuthData("iKC0yCHfjW4fiemBo44eK1OBpYplZ9e6", 2592000, user.MembroID.ToString());
+                    authData.isProjectManager = false;
+                    return authData;
                 }
             }
             catch (Exception ex) {
