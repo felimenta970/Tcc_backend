@@ -93,8 +93,14 @@ namespace Tcc_backend.Controllers {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            if (string.IsNullOrWhiteSpace(model.Description))
-                return BadRequest(new { message = "O campo 'descrição' não pode estar vazio" });
+            if (string.IsNullOrWhiteSpace(model.WhoDesc))
+                return BadRequest(new { message = "O campo 'Quem' não pode estar vazio" });
+
+            if (string.IsNullOrWhiteSpace(model.WhatDesc))
+                return BadRequest(new { message = "O campo 'O que' não pode estar vazio" });
+
+            if (string.IsNullOrWhiteSpace(model.WhyDesc))
+                return BadRequest(new { message = "O campo 'Para que' não pode estar vazio" });
 
             ProjetoService sProjeto = new ProjetoService();
 
@@ -120,8 +126,14 @@ namespace Tcc_backend.Controllers {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            if (string.IsNullOrWhiteSpace(model.data.Description))
-                return BadRequest(new { message = "O campo 'descrição' não pode estar vazio" });
+            if (string.IsNullOrWhiteSpace(model.data.WhoDesc))
+                return BadRequest(new { message = "O campo 'Quem' não pode estar vazio" });
+
+            if (string.IsNullOrWhiteSpace(model.data.WhatDesc))
+                return BadRequest(new { message = "O campo 'O que' não pode estar vazio" });
+
+            if (string.IsNullOrWhiteSpace(model.data.WhyDesc))
+                return BadRequest(new { message = "O campo 'Para que' não pode estar vazio" });
 
             if (string.IsNullOrWhiteSpace(model.mudanca.Description))
                 return BadRequest(new { message = "O campo 'descrição' não pode estar vazio" });

@@ -29,7 +29,9 @@ namespace Tcc_backend.Business {
         public int Adicionar(UserStoryModelCreate model) {
 
             var userStory = new UserStory() {
-                Description = model.Description,
+                WhoDesc = model.WhoDesc,
+                WhatDesc = model.WhatDesc,
+                WhyDesc = model.WhyDesc,
                 ProjetoID = model.ProjetoID,
                 CreatedAt = DateTime.Now,
                 Status = Enums.UserStoryStatus.ToDo,
@@ -42,10 +44,11 @@ namespace Tcc_backend.Business {
 
             var userStory = _dao.Get(model.data.UserStoryID);
 
-            userStory.Description = model.data.Description;
+            userStory.WhoDesc = model.data.WhoDesc;
+            userStory.WhatDesc = model.data.WhatDesc;
+            userStory.WhyDesc = model.data.WhyDesc;
             userStory.MembroID = model.data.MembroID;
-            userStory.SprintID = model.data.SprintID;
-            userStory.Status = model.data.Status;
+            userStory.Status = Enums.UserStoryStatus.ToDo;
 
             MudancaBusiness bMudanca = new MudancaBusiness();
 
@@ -68,7 +71,9 @@ namespace Tcc_backend.Business {
 
             UserStoryModel model = new UserStoryModel() {
                 UserStoryID = userStory.UserStoryID,
-                Description = userStory.Description,
+                WhoDesc = userStory.WhoDesc,
+                WhatDesc = userStory.WhatDesc,
+                WhyDesc = userStory.WhyDesc,
                 MembroID = userStory.MembroID,
                 ProjectManagerID = userStory.ProjectManagerID,
                 SprintID = userStory.SprintID,

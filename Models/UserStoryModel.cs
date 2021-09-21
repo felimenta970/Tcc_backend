@@ -9,7 +9,11 @@ namespace Tcc_backend.Models {
 
         public int UserStoryID { get; set; }
 
-        public string Description { get; set; }
+        public string WhoDesc { get; set; }
+
+        public string WhatDesc { get; set; }
+
+        public string WhyDesc { get; set; }
 
         public int MembroID { get; set; }
 
@@ -27,9 +31,17 @@ namespace Tcc_backend.Models {
 
     public class UserStoryModelCreate {
 
-        public string Description { get; set; }
+        public string WhoDesc { get; set; }
+
+        public string WhatDesc { get; set; }
+
+        public string WhyDesc { get; set; }
 
         public int ProjetoID { get; set; }
+
+        public int MembroID { get; set; }
+
+        public int ProjectManagerID { get; set; }
     }
 
     public class UserStoryModelUpdate {
@@ -40,16 +52,22 @@ namespace Tcc_backend.Models {
     }
 
     public class UserStoryModelUpdateData {
+
         public int UserStoryID { get; set; }
 
-        public string Description { get; set; }
+        public string WhoDesc { get; set; }
+
+        public string WhatDesc { get; set; }
+
+        public string WhyDesc { get; set; }
 
         public int MembroID { get; set; }
 
-        public int SprintID { get; set; }
+    }
+
+    public class UserStoryModelUpdateStatus {
 
         public Enums.UserStoryStatus Status { get; set; }
-
     }
 }
 

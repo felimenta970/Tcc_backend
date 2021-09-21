@@ -11,7 +11,11 @@ namespace Tcc_backend.Entities {
         [Key]
         public int UserStoryID { get; set; }
 
-        public string Description { get; set; }
+        public string WhoDesc { get; set; }
+
+        public string WhatDesc { get; set; }
+
+        public string WhyDesc { get; set; }
 
         [ForeignKey("MembroID")]
         public Membro Membro { get; set; }
