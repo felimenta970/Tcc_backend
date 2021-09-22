@@ -37,16 +37,22 @@ namespace Tcc_backend.Controllers {
 
                 var bearerToken = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
 
-                if (user.ProjectManagerID != null) {
-                    var authData = sAuth.GetAuthData("iKC0yCHfjW4fiemBo44eK1OBpYplZ9e6", 2592000, user.ProjectManagerID.ToString());
-                    authData.isProjectManager = true;
-                    return authData;
+                try {
+                    var pmID = user.ProjectManagerID;
+                    if (pmID != null) {
+                        var authData = sAuth.GetAuthData("iKC0yCHfjW4fiemBo44eK1OBpYplZ9e6", 2592000, user.ProjectManagerID.ToString());
+                        authData.isProjectManager = true;
+                        return authData;
+                    }
+                } catch {
+                    var userID = user.MembroID;
+                    if (userID != null) {
+                        var authData = sAuth.GetAuthData("iKC0yCHfjW4fiemBo44eK1OBpYplZ9e6", 2592000, user.MembroID.ToString());
+                        authData.isProjectManager = false;
+                        return authData;
+                    }
                 }
-                else {
-                    var authData = sAuth.GetAuthData("iKC0yCHfjW4fiemBo44eK1OBpYplZ9e6", 2592000, user.MembroID.ToString());
-                    authData.isProjectManager = false;
-                    return authData;
-                }
+                return NotFound();
             }
             catch (Exception ex) {
                 return StatusCode(500, "Erro de servidor");

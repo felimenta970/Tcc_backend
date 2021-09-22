@@ -9,6 +9,7 @@ namespace Tcc_backend.Business {
     public class ProjetoBusiness {
 
         ProjetoDao _dao = new ProjetoDao();
+        UsuarioDao _usuarioDao = new UsuarioDao();
 
         public Projeto Get(int ProjetoID) {
             return _dao.Get(ProjetoID);
@@ -27,7 +28,15 @@ namespace Tcc_backend.Business {
                 UrlGit = projetoModel.UrlGit,
             };
 
-            return _dao.Adicionar(projeto);
+            var projetoID = _dao.Adicionar(projeto);
+
+            List<int> membrosID = projetoModel.Membros.Select(x => x.MembroID).ToList();
+
+            _usuarioDao.AssociaMembroProjeto(membrosID, projetoID);
+
+            _usuarioDao.AssociaManagerProjeto(projetoModel.ProjectManagerID, projetoID);
+
+            return projetoID;
         }
 
         public Projeto Update(ProjetoModelUpdate projetoModel) {
