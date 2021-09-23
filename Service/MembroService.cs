@@ -9,9 +9,9 @@ using Tcc_backend.Models;
 namespace Tcc_backend.Service {
     public class MembroService {
 
-        public List<Membro> GetListMembros() {
+        public List<Membro> GetListMembros(int? ProjetoID) {
             MembroBusiness bMembro = new MembroBusiness();
-            return bMembro.GetListMembros();
+            return bMembro.GetListMembros(ProjetoID);
         }
 
         public MembroModel EntityToModel(Membro membro) {

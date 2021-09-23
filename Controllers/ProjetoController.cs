@@ -24,11 +24,11 @@ namespace Tcc_backend.Controllers {
 
         UserStoryService sUserStory = new UserStoryService();
 
-        [HttpGet]
-        public IActionResult List() {
+        [HttpGet("{UsuarioID}")]
+        public IActionResult List([FromRoute] int UsuarioID) {
 
             try {
-                var projetoList = sProjeto.List();
+                var projetoList = sProjeto.List(UsuarioID);
 
                 List<ProjetoModel> listModel = new List<ProjetoModel>();
 
@@ -44,14 +44,15 @@ namespace Tcc_backend.Controllers {
         }
 
         [HttpGet]
-        [Route("{ProjetoID}")]
+        [Route("projetoItem/{ProjetoID}")]
         public IActionResult Get([FromRoute] int ProjetoID) {
 
             var proj = sProjeto.Get(ProjetoID);
 
-            if (proj != null) { 
+            if (proj != null) {
                 return Ok(proj);
-            } else {
+            }
+            else {
                 return NotFound();
             }
 

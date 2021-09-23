@@ -9,9 +9,9 @@ using Tcc_backend.Models;
 namespace Tcc_backend.Service {
     public class ProjetoService {
 
-        public List<Projeto> List() {
+        public List<Projeto> List(int UsuarioID) {
             ProjetoBusiness bProjeto = new ProjetoBusiness();
-            return bProjeto.List();
+            return bProjeto.List(UsuarioID);
         }
 
         public Projeto Get(int ProjetoID) {

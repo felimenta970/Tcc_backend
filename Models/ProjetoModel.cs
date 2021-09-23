@@ -48,7 +48,7 @@ namespace Tcc_backend.Models {
 
         public string UrlGit { get; set; }
 
-        public List<MembroModel> Membros { get; set; }
+        public List<int> Membros { get; set; }
 
     }
 }

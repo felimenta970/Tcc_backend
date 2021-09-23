@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Tcc_backend.Dao;
 using Tcc_backend.Entities;
 using Tcc_backend.Models;
 
@@ -10,13 +11,17 @@ namespace Tcc_backend.Business {
 
         ProjetoDao _dao = new ProjetoDao();
         UsuarioDao _usuarioDao = new UsuarioDao();
+        UsuarioProjetoDao _usuarioProjetoDao = new UsuarioProjetoDao();
 
         public Projeto Get(int ProjetoID) {
             return _dao.Get(ProjetoID);
         }
 
-        public List<Projeto> List() {
-            return _dao.List();
+        public List<Projeto> List(int UsuarioID) {
+
+            var projetosIDs = _usuarioProjetoDao.ListProjetosByUsuario(UsuarioID);
+
+            return _dao.List(projetosIDs);
         }
 
         public int Adicionar(ProjetoModelCreate projetoModel) {
@@ -47,6 +52,8 @@ namespace Tcc_backend.Business {
             projeto.InitialDate = projetoModel.InitialDate;
             projeto.Title = projetoModel.Title;
             projeto.UrlGit = projetoModel.UrlGit;
+
+            _usuarioDao.AssociaMembroProjeto(projetoModel.Membros, projetoModel.ProjetoID);
 
             return _dao.Update(projeto);
         }

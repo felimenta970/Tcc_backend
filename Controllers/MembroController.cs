@@ -45,13 +45,13 @@ namespace Tcc_backend.Controllers {
             }
         }
 
-        [HttpGet]
-        public IActionResult ListMembros() {
+        [HttpGet("{ProjetoID}")]
+        public IActionResult ListMembros([FromRoute] int ProjetoID) {
 
             MembroService sMembro = new MembroService();
 
             try {
-                List<Membro> listEntity = sMembro.GetListMembros();
+                List<Membro> listEntity = sMembro.GetListMembros(ProjetoID);
                 List<MembroModel> listModel = new List<MembroModel>();
 
                 if (listEntity.Count == 0) {

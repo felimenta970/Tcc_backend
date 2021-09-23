@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Tcc_backend.Dao;
 using Tcc_backend.Entities;
 using Tcc_backend.Models;
 
@@ -11,8 +12,8 @@ namespace Tcc_backend.Business {
 
         MembroDao _dao = new MembroDao();
 
-        public List<Membro> GetListMembros() {
-            var membros = _dao.GetListMembros();
+        public List<Membro> GetListMembros(int? ProjetoID) {
+            var membros = _dao.GetListMembros(ProjetoID);
             return membros;
         }
 

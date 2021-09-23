@@ -7,24 +7,40 @@ using Tcc_backend.DataBaseConfig;
 using Tcc_backend.Entities;
 using Tcc_backend.Models;
 
-namespace Tcc_backend.Business {
-    public class ProjetoDao : BusinessBase {
+namespace Tcc_backend.Dao {
+    public class ProjetoDao {
 
         DatabaseContext _databaseContext = new DatabaseContext();
 
-        public List<Projeto> List() {
+        public List<Projeto> List(List<int> ProjetosID) {
 
-            var projetos = _databaseContext.Projeto.ToList();
-
+            var projetos = _databaseContext.Projeto.Where(x => ProjetosID.Contains(x.ProjetoID)).ToList();
             return projetos;
         }
 
-        public Projeto Get(int ProjetoID) {
+        public ProjetoModelUpdate GetWithMembros(int ProjetoID) {
 
             var projeto = _databaseContext.Projeto
                 .Where(x => x.ProjetoID == ProjetoID).FirstOrDefault();
 
-            return projeto;
+            var membros = _databaseContext.UsuarioProjeto
+                .Where(x => x.ProjetoID == ProjetoID && x.isProjectManager == false).Select(x => x.UsuarioID).ToList();
+
+            ProjetoModelUpdate model = new ProjetoModelUpdate() {
+                Title = projeto.Title,
+                Description = projeto.Description,
+                UrlGit = projeto.UrlGit,
+                InitialDate = projeto.InitialDate,
+                Membros = membros,
+            };
+
+            return model;
+        }
+
+        public Projeto Get(int ProjetoID) {
+
+            return _databaseContext.Projeto
+                .Where(x => x.ProjetoID == ProjetoID).FirstOrDefault();
         }
 
         public int Adicionar(Projeto projeto) {
