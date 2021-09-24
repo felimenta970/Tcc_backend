@@ -27,7 +27,7 @@ namespace Tcc_backend.Entities {
         [ForeignKey("ProjectManagerID")]
         public ProjectManager ProjectManager { get; set; }
 
-        public int SprintID { get; set; }
+        public int? SprintID { get; set; }
 
         public DateTime CreatedAt { get; set; }
 

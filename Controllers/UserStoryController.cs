@@ -14,6 +14,9 @@ namespace Tcc_backend.Controllers {
     public class UserStoryController : ControllerBase {
 
         UserStoryService sUserStory = new UserStoryService();
+        CommitService sCommit = new CommitService();
+        AnexoService sAnexo = new AnexoService();
+        MembroService sMembro = new MembroService();
 
         [HttpGet]
         [Route("{UserStoryID}")]
@@ -21,9 +24,18 @@ namespace Tcc_backend.Controllers {
 
             var userStory = sUserStory.Get(UserStoryID);
 
+            var commits = sCommit.ListByUserStoryID(UserStoryID);
+
+            var anexos = sAnexo.ListByUserStoryID(UserStoryID);
+
+            var membro = sMembro.Get(userStory.MembroID);
+
             if (userStory != null) {
 
                 var model = sUserStory.EntityToModel(userStory);
+                model.Anexos = anexos;
+                model.Commits = commits;
+                model.MembroName = membro.Name;
 
                 return Ok(model);
             } else {

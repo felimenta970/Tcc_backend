@@ -12,9 +12,13 @@ namespace Tcc_backend.Business {
 
         MembroDao _dao = new MembroDao();
 
-        public List<Membro> GetListMembros(int? ProjetoID) {
-            var membros = _dao.GetListMembros(ProjetoID);
+        public List<Membro> GetListMembros(int? ProjetoID, bool isUserStoryEdit) {
+            var membros = _dao.GetListMembros(ProjetoID, isUserStoryEdit);
             return membros;
+        }
+
+        public Membro Get(int MembroID) {
+            return _dao.Get(MembroID);
         }
 
         public MembroModel EntityToModel(Membro membro) {

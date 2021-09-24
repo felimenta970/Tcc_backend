@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tcc_backend.DataBaseConfig;
 
 namespace Tcc_backend.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210923201615_UserStoryRelacao2")]
+    partial class UserStoryRelacao2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,7 +156,7 @@ namespace Tcc_backend.Migrations
                     b.Property<DateTime>("InitialDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 9, 23, 17, 39, 42, 92, DateTimeKind.Local).AddTicks(4796));
+                        .HasDefaultValue(new DateTime(2021, 9, 23, 17, 16, 14, 724, DateTimeKind.Local).AddTicks(7250));
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -224,7 +226,7 @@ namespace Tcc_backend.Migrations
                     b.Property<int>("ProjetoID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SprintID")
+                    b.Property<int>("SprintID")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -349,7 +351,9 @@ namespace Tcc_backend.Migrations
 
                     b.HasOne("Tcc_backend.Entities.Sprint", null)
                         .WithMany("UserStories")
-                        .HasForeignKey("SprintID");
+                        .HasForeignKey("SprintID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Membro");
 

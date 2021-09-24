@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Tcc_backend.Dao;
 using Tcc_backend.Entities;
 using Tcc_backend.Models;
 
@@ -9,6 +10,7 @@ namespace Tcc_backend.Business {
     public class UserStoryBusiness {
 
         UserStoryDao _dao = new UserStoryDao();
+        RelacaoUserStoriesDao _relacaoDao = new RelacaoUserStoriesDao();
 
         public UserStory Get(int UserStoryID) {
             return _dao.Get(UserStoryID);
@@ -35,9 +37,16 @@ namespace Tcc_backend.Business {
                 ProjetoID = model.ProjetoID,
                 CreatedAt = DateTime.Now,
                 Status = Enums.UserStoryStatus.ToDo,
+                MembroID = model.MembroID,
+                ProjectManagerID = model.ProjectManagerID,
             };
 
-            return _dao.Adicionar(userStory);
+            var userStoryIDCriado = _dao.Adicionar(userStory);
+
+            if (model.UserStoryPai != null)
+                _relacaoDao.AddOrUpdateRelacao(userStoryIDCriado, model.UserStoryPai.Value);
+
+            return userStoryIDCriado;
         }
 
         public UserStory Update(UserStoryModelUpdate model) {
@@ -52,7 +61,11 @@ namespace Tcc_backend.Business {
 
             MudancaBusiness bMudanca = new MudancaBusiness();
 
+            model.mudanca.UserStoryID = model.data.UserStoryID;
             bMudanca.Adicionar(model.mudanca);
+
+            if (model.data.UserStoryPai != null)
+                _relacaoDao.AddOrUpdateRelacao(userStory.UserStoryID, model.data.UserStoryPai.Value);
 
             return _dao.Update(userStory);
 

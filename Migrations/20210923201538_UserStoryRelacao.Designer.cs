@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tcc_backend.DataBaseConfig;
 
 namespace Tcc_backend.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210923201538_UserStoryRelacao")]
+    partial class UserStoryRelacao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,7 +156,7 @@ namespace Tcc_backend.Migrations
                     b.Property<DateTime>("InitialDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 9, 23, 17, 39, 42, 92, DateTimeKind.Local).AddTicks(4796));
+                        .HasDefaultValue(new DateTime(2021, 9, 23, 17, 15, 38, 536, DateTimeKind.Local).AddTicks(567));
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -165,24 +167,6 @@ namespace Tcc_backend.Migrations
                     b.HasKey("ProjetoID");
 
                     b.ToTable("Projeto");
-                });
-
-            modelBuilder.Entity("Tcc_backend.Entities.RelacaoUserStory", b =>
-                {
-                    b.Property<int>("RelacaoUserStoryID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("HistoriaUsuarioFilhoID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HistoriaUsuarioPaiID")
-                        .HasColumnType("int");
-
-                    b.HasKey("RelacaoUserStoryID");
-
-                    b.ToTable("RelacaoUserStories");
                 });
 
             modelBuilder.Entity("Tcc_backend.Entities.Sprint", b =>
@@ -224,7 +208,7 @@ namespace Tcc_backend.Migrations
                     b.Property<int>("ProjetoID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SprintID")
+                    b.Property<int>("SprintID")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -349,7 +333,9 @@ namespace Tcc_backend.Migrations
 
                     b.HasOne("Tcc_backend.Entities.Sprint", null)
                         .WithMany("UserStories")
-                        .HasForeignKey("SprintID");
+                        .HasForeignKey("SprintID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Membro");
 

@@ -46,12 +46,38 @@ namespace Tcc_backend.Controllers {
         }
 
         [HttpGet("{ProjetoID}")]
-        public IActionResult ListMembros([FromRoute] int ProjetoID) {
+        public IActionResult ListMembros([FromRoute] int ProjetoID, [FromQuery] bool isUserStoryEdit) {
 
             MembroService sMembro = new MembroService();
 
             try {
-                List<Membro> listEntity = sMembro.GetListMembros(ProjetoID);
+                List<Membro> listEntity = sMembro.GetListMembros(ProjetoID, isUserStoryEdit);
+                List<MembroModel> listModel = new List<MembroModel>();
+
+                if (listEntity.Count == 0) {
+                    return NoContent();
+                }
+
+                foreach (var entity in listEntity) {
+                    var modelItem = sMembro.EntityToModel(entity);
+                    listModel.Add(modelItem);
+                }
+
+                return Ok(listModel);
+            }
+            catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
+            }
+
+        }
+
+        [HttpGet]
+        public IActionResult ListMembros() {
+
+            MembroService sMembro = new MembroService();
+
+            try {
+                List<Membro> listEntity = sMembro.GetListMembros(null, false);
                 List<MembroModel> listModel = new List<MembroModel>();
 
                 if (listEntity.Count == 0) {

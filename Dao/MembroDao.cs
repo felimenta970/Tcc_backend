@@ -11,19 +11,31 @@ namespace Tcc_backend.Dao {
 
         DatabaseContext _databaseContext = new DatabaseContext();
 
-        public List<Membro> GetListMembros(int? ProjetoID) {
+        public List<Membro> GetListMembros(int? ProjetoID, bool isUserStoryEdit) {
 
             if (ProjetoID != null) {
                 var usuarioProjeto = _databaseContext.UsuarioProjeto.Where(x => x.ProjetoID == ProjetoID).Select(x => x.UsuarioID).ToList();
 
-                return _databaseContext.Membro.Where(x => !usuarioProjeto.Contains(x.MembroID)).ToList();
+                if (isUserStoryEdit)
+                    return _databaseContext.Membro.Where(x => usuarioProjeto.Contains(x.MembroID)).ToList();
+                else
+                    return _databaseContext.Membro.Where(x => !usuarioProjeto.Contains(x.MembroID)).ToList();
 
             } else {
+
                 return _databaseContext.Membro.ToList();
             }
-            
 
+        }
 
+        public Membro Get(int MembroID) {
+            return _databaseContext.Membro.FirstOrDefault(x => x.MembroID == MembroID);
+        }
+
+        public List<Membro> GetListMembrosInProject(int ProjetoID) {
+            var usuarioProjeto = _databaseContext.UsuarioProjeto.Where(x => x.ProjetoID == ProjetoID).Select(x => x.UsuarioID).ToList();
+
+            return _databaseContext.Membro.Where(x => usuarioProjeto.Contains(x.MembroID)).ToList();
         }
 
         public int Add(Membro membro) {
