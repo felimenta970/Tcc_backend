@@ -48,6 +48,16 @@ namespace Tcc_backend.Service {
             UserStoryBusiness bUserStory = new UserStoryBusiness();
             return bUserStory.EntityToModel(userStory);
         }
+
+        public UserStory GetUserStoryPai(int UserStoryID) {
+            UserStoryBusiness bUserStory = new UserStoryBusiness();
+            return bUserStory.GetUserStoryPai(UserStoryID);
+        }
+
+        public int ChangeStatusUserStory(int UserStoryID, Enums.UserStoryStatus status) {
+            UserStoryBusiness bUserStory = new UserStoryBusiness();
+            return bUserStory.ChangeStatusUserStory(UserStoryID, status);
+        }
     }
 
     

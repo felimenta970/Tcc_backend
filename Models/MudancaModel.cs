@@ -16,6 +16,8 @@ namespace Tcc_backend.Models {
         public DateTime DataModificacao { get; set; }
 
         public int ProjectManagerID { get; set; }
+
+        public string ChangeReasonString { get; set; }
     }
 
     public class MudancaModelCreate {

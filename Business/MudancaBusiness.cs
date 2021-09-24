@@ -43,10 +43,25 @@ namespace Tcc_backend.Business {
                 UserStoryID = mudanca.UserStoryID,
                 Description = mudanca.Description,
                 DataModificacao = mudanca.DataModificacao,
-                ProjectManagerID = mudanca.ProjectManagerID
+                ProjectManagerID = mudanca.ProjectManagerID,
+                ChangeReasonString = this.ChangeReasonToString(mudanca.ChangeReason)
             };
 
             return model;
+        }
+
+        public string ChangeReasonToString(Enums.ChangeReason reason) {
+
+            if (reason == Enums.ChangeReason.MudancaResponsavel)
+                return "Mudança de responsável";
+            if (reason == Enums.ChangeReason.CorrecaoInfo)
+                return "Correção de informação";
+            if (reason == Enums.ChangeReason.Esclarecimento)
+                return "Esclarecimento";
+            if (reason == Enums.ChangeReason.Outro)
+                return "Outros";
+
+            return null;
         }
     }
 }

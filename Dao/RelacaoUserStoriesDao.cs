@@ -36,5 +36,10 @@ namespace Tcc_backend.Dao {
 
 
         }
+
+        public RelacaoUserStory GetByUserStoryFilho(int userStoryFilhoID) {
+
+            return _databaseContext.RelacaoUserStories.FirstOrDefault(x => x.HistoriaUsuarioFilhoID == userStoryFilhoID);
+        }
     }
 }

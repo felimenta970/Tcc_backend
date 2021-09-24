@@ -80,6 +80,12 @@ namespace Tcc_backend.Business {
             _dao.Delete(userStory);
         }
 
+        public UserStory GetUserStoryPai(int UserStoryID) {
+
+            var relacao = _relacaoDao.GetByUserStoryFilho(UserStoryID);
+            return this.Get(relacao.HistoriaUsuarioPaiID);
+        }
+
         public UserStoryModel EntityToModel(UserStory userStory) {
 
             UserStoryModel model = new UserStoryModel() {
@@ -96,6 +102,15 @@ namespace Tcc_backend.Business {
             };
 
             return model;
+        }
+
+        public int ChangeStatusUserStory(int UserStoryID, Enums.UserStoryStatus status) {
+
+            var userStory = _dao.Get(UserStoryID);
+
+            userStory.Status = status;
+
+            return _dao.Update(userStory).UserStoryID;
         }
 
 

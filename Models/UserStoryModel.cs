@@ -33,6 +33,7 @@ namespace Tcc_backend.Models {
 
         public string MembroName { get; set; }
 
+        public int UserStoryPaiID { get; set; }
     }
 
     public class UserStoryModelCreate {
@@ -78,6 +79,8 @@ namespace Tcc_backend.Models {
     public class UserStoryModelUpdateStatus {
 
         public Enums.UserStoryStatus Status { get; set; }
+
+        public int UserStoryID { get; set; }
     }
 }
 

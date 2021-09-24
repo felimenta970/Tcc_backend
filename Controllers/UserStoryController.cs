@@ -24,18 +24,23 @@ namespace Tcc_backend.Controllers {
 
             var userStory = sUserStory.Get(UserStoryID);
 
-            var commits = sCommit.ListByUserStoryID(UserStoryID);
-
-            var anexos = sAnexo.ListByUserStoryID(UserStoryID);
-
-            var membro = sMembro.Get(userStory.MembroID);
+            
 
             if (userStory != null) {
+
+                var commits = sCommit.ListByUserStoryID(UserStoryID);
+
+                var anexos = sAnexo.ListByUserStoryID(UserStoryID);
+
+                var membro = sMembro.Get(userStory.MembroID);
+
+                var userStoryPai = sUserStory.GetUserStoryPai(UserStoryID);
 
                 var model = sUserStory.EntityToModel(userStory);
                 model.Anexos = anexos;
                 model.Commits = commits;
                 model.MembroName = membro.Name;
+                model.UserStoryPaiID = userStoryPai.UserStoryID;
 
                 return Ok(model);
             } else {
@@ -166,6 +171,27 @@ namespace Tcc_backend.Controllers {
                 return StatusCode(500, "Erro de servidor");
             }
 
+        }
+
+        [HttpPut("status")]
+        public IActionResult ChangeStatus([FromBody] UserStoryModelUpdateStatus model) {
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            if (model.UserStoryID == null)
+                return BadRequest();
+
+            if (model.Status == null)
+                return BadRequest("Selecione um status para a user story");
+
+            try {
+                var result = sUserStory.ChangeStatusUserStory(model.UserStoryID, model.Status);
+                return Ok(result);
+
+            } catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
+            }
         }
 
         [HttpDelete]
