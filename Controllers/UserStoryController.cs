@@ -63,13 +63,7 @@ namespace Tcc_backend.Controllers {
 
                 List<AnexoModel> listAnexos = new List<AnexoModel>();
 
-                foreach (var anexo in anexos) {
-
-                    AnexoModel anexoModel = sAnexo.EntityToModel(anexo);
-                    listAnexos.Add(anexoModel);
-                }
-
-                return Ok(listAnexos);
+                return Ok(anexos);
             }
             catch (Exception ex) {
                 return StatusCode(500, "Erro de servidor");

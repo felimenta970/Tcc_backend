@@ -14,8 +14,15 @@ namespace Tcc_backend.Business {
             return _dao.Get(AnexoID);
         }
 
-        public List<Anexo> ListByUserStoryId(int UserStoryID) {
-            return _dao.ListByUserStoryId(UserStoryID);
+        public List<AnexoModel> ListByUserStoryId(int UserStoryID) {
+            var anexos = _dao.ListByUserStoryId(UserStoryID);
+
+            List<AnexoModel> listAnexo = new List<AnexoModel>();
+            foreach(var anexo in anexos) {
+                listAnexo.Add(this.EntityToModel(anexo));
+            }
+
+            return listAnexo;
         }
 
         public int Adicionar(AnexoModelCreate model) {
@@ -56,8 +63,19 @@ namespace Tcc_backend.Business {
                 Url = anexo.Url,
                 Name = anexo.Name,
                 TipoAnexo = anexo.TipoAnexo,
-                UserStoryID = anexo.UserStoryID
+                UserStoryID = anexo.UserStoryID,
             };
+
+            if (anexo.TipoAnexo == Enums.TypeAnexo.Imagem)
+                anexoModel.tipoAnexoLabel = "Imagem";
+            else if (anexo.TipoAnexo == Enums.TypeAnexo.Video)
+                anexoModel.tipoAnexoLabel = "Vídeo";
+            else if (anexo.TipoAnexo == Enums.TypeAnexo.Audio)
+                anexoModel.tipoAnexoLabel = "Áudio";
+            else if (anexo.TipoAnexo == Enums.TypeAnexo.Texto)
+                anexoModel.tipoAnexoLabel = "Texto";
+            else
+                anexoModel.tipoAnexoLabel = "Outros";
 
             return anexoModel;
         }

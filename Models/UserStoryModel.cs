@@ -29,7 +29,7 @@ namespace Tcc_backend.Models {
 
         public List<Commit> Commits { get; set; }
 
-        public List<Anexo> Anexos { get; set; }
+        public List<AnexoModel> Anexos { get; set; }
 
         public string MembroName { get; set; }
 

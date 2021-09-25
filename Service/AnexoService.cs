@@ -15,7 +15,7 @@ namespace Tcc_backend.Service {
             return bAnexo.Get(AnexoID);
         }
 
-        public List<Anexo> ListByUserStoryID(int UserStoryID) {
+        public List<AnexoModel> ListByUserStoryID(int UserStoryID) {
             AnexoBusiness bAnexo = new AnexoBusiness();
             return bAnexo.ListByUserStoryId(UserStoryID);
         }

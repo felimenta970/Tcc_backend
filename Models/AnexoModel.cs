@@ -16,6 +16,8 @@ namespace Tcc_backend.Models {
         public Enums.TypeAnexo TipoAnexo { get; set; }
 
         public int UserStoryID { get; set; }
+
+        public string tipoAnexoLabel { get; set; }
     }
 
     public class AnexoModelCreate {
