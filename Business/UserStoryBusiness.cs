@@ -99,6 +99,7 @@ namespace Tcc_backend.Business {
                 CreatedAt = userStory.CreatedAt,
                 Status = userStory.Status,
                 ProjetoID = userStory.ProjetoID,
+                Description = $"Como um {userStory.WhoDesc}, eu quero {userStory.WhatDesc} para que {userStory.WhyDesc}",
             };
 
             return model;
@@ -111,6 +112,11 @@ namespace Tcc_backend.Business {
             userStory.Status = status;
 
             return _dao.Update(userStory).UserStoryID;
+        }
+
+        public List<UserStory> ListByProjetoSemSprint(int ProjetoID) {
+
+            return _dao.ListByProjetoSemSprint(ProjetoID);
         }
 
 

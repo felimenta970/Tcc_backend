@@ -69,6 +69,9 @@ namespace Tcc_backend.Business {
             _databaseContext.SaveChanges();
         }
 
+        public List<UserStory> ListByProjetoSemSprint(int ProjetoID) {
 
+            return _databaseContext.UserStory.Where(x => x.ProjetoID == ProjetoID && x.SprintID == null).ToList();
+        }
     }
 }

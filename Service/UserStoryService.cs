@@ -58,6 +58,11 @@ namespace Tcc_backend.Service {
             UserStoryBusiness bUserStory = new UserStoryBusiness();
             return bUserStory.ChangeStatusUserStory(UserStoryID, status);
         }
+
+        public List<UserStory> ListByProjetoSemSprint(int ProjetoID) {
+            UserStoryBusiness bUserStory = new UserStoryBusiness();
+            return bUserStory.ListByProjetoSemSprint(ProjetoID);
+        }
     }
 
     

@@ -34,6 +34,8 @@ namespace Tcc_backend.Models {
         public string MembroName { get; set; }
 
         public int UserStoryPaiID { get; set; }
+
+        public string Description { get; set; }
     }
 
     public class UserStoryModelCreate {

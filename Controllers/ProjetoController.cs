@@ -85,6 +85,33 @@ namespace Tcc_backend.Controllers {
             }
         }
 
+        [HttpGet]
+        [Route("userStoriesSemSprint/{ProjetoID}")]
+        public IActionResult ListByProjetoSemSprint([FromRoute] int ProjetoID) {
+
+            try {
+                var userStoryList = sUserStory.ListByProjetoSemSprint(ProjetoID);
+
+                if (userStoryList.Count == 0 && userStoryList == null) {
+                    return NotFound("Não foi possível encontrar nenhuma User Story para esse projeto");
+                }
+
+                List<UserStoryModel> modelList = new List<UserStoryModel>();
+
+                foreach (var userStory in userStoryList) {
+
+                    var model = sUserStory.EntityToModel(userStory);
+
+                    modelList.Add(model);
+                }
+
+                return Ok(modelList);
+            }
+            catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
+            }
+        }
+
         [HttpPost]
         public IActionResult Adicionar([FromBody] ProjetoModelCreate projeto) {
 
