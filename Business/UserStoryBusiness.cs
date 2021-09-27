@@ -99,7 +99,7 @@ namespace Tcc_backend.Business {
                 CreatedAt = userStory.CreatedAt,
                 Status = userStory.Status,
                 ProjetoID = userStory.ProjetoID,
-                Description = $"Como um {userStory.WhoDesc}, eu quero {userStory.WhatDesc} para que {userStory.WhyDesc}",
+                Description = $"#{userStory.UserStoryID} - Como um {userStory.WhoDesc}, eu quero {userStory.WhatDesc} para que {userStory.WhyDesc}",
             };
 
             return model;

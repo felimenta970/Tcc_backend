@@ -19,6 +19,8 @@ namespace Tcc_backend.Models {
 
         public int ProjetoID { get; set; }
 
+        public List<int> UserStories { get; set; }
+
     }
 
     public class SprintModelUpdate {

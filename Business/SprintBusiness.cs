@@ -9,6 +9,7 @@ namespace Tcc_backend.Business {
     public class SprintBusiness {
 
         SprintDao _dao = new SprintDao();
+        UserStoryDao _userStoryDao = new UserStoryDao();
 
         public Sprint Get(int SprintID) {
             return _dao.Get(SprintID);
@@ -26,7 +27,15 @@ namespace Tcc_backend.Business {
                 ProjetoID = model.ProjetoID,
             };
 
-            return _dao.Adicionar(sprint);
+            var SprintID = _dao.Adicionar(sprint);
+
+            foreach (var userStoryID in model.UserStories) {
+                var userStory = _userStoryDao.Get(userStoryID);
+                userStory.SprintID = SprintID;
+                _userStoryDao.Update(userStory);
+            }
+
+            return SprintID;
 
         }
 
