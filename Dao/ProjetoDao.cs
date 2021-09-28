@@ -18,6 +18,11 @@ namespace Tcc_backend.Dao {
             return projetos;
         }
 
+        public List<Projeto> ListAll() {
+
+            return _databaseContext.Projeto.ToList();
+        }
+
         public ProjetoModelUpdate GetWithMembros(int ProjetoID) {
 
             var projeto = _databaseContext.Projeto

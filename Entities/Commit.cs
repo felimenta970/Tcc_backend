@@ -15,6 +15,10 @@ namespace Tcc_backend.Entities {
 
         public string Message { get; set; }
 
+        public string Url { get; set; }
+
+        public string Sha { get; set; }
+
         public int UserStoryID { get; set; }
 
         [ForeignKey("UserStoryID")]

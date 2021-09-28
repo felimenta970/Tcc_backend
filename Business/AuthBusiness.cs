@@ -38,6 +38,9 @@ namespace Tcc_backend.Business {
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
 
+            CommitBusiness bCommit = new CommitBusiness();
+            //bCommit.PullCommitsFromGithub();
+
             return new AuthData {
                 Token = token,
                 TokenExpirationTime = ((DateTimeOffset)expirationTime).ToUnixTimeSeconds(),

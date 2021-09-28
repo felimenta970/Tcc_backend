@@ -28,6 +28,11 @@ namespace Tcc_backend.Business {
             return commits;
         }
 
+        public List<string> ListAllShasIDs() {
+
+            return _databaseContext.Commit.Select(x => x.Sha).ToList();
+        }
+
         public int Adicionar(Commit commit) {
 
             _databaseContext.Commit.Add(commit);
@@ -41,6 +46,20 @@ namespace Tcc_backend.Business {
             _databaseContext.Commit.Attach(commit);
             _databaseContext.Commit.Remove(commit);
             _databaseContext.SaveChanges();
+        }
+
+        public void UpdateCheckDate(DateTime date) {
+
+            var commitChecker = _databaseContext.CommitChecker.FirstOrDefault();
+            commitChecker.lastCheck = DateTime.Now;
+
+            _databaseContext.CommitChecker.Update(commitChecker);
+            _databaseContext.SaveChanges();
+        }
+
+        public DateTime GetLastCheckDate() {
+
+            return _databaseContext.CommitChecker.FirstOrDefault().lastCheck;
         }
     }
 }

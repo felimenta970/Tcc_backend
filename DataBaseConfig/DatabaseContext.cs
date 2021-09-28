@@ -17,8 +17,8 @@ namespace Tcc_backend.DataBaseConfig {
         public DbSet<Sprint> Sprint { get; set; }
         public DbSet<UserStory> UserStory { get; set; }
         public DbSet<UsuarioProjeto> UsuarioProjeto { get; set; }
-
         public DbSet<RelacaoUserStory> RelacaoUserStories { get; set; }
+        public DbSet<CommitChecker> CommitChecker { get; set; }
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
 

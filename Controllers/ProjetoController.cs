@@ -24,6 +24,8 @@ namespace Tcc_backend.Controllers {
 
         UserStoryService sUserStory = new UserStoryService();
 
+        SprintService sSprint = new SprintService();
+
         [HttpGet("{UsuarioID}")]
         public IActionResult List([FromRoute] int UsuarioID) {
 
@@ -92,7 +94,7 @@ namespace Tcc_backend.Controllers {
             try {
                 var userStoryList = sUserStory.ListByProjetoSemSprint(ProjetoID);
 
-                if (userStoryList.Count == 0 && userStoryList == null) {
+                if (userStoryList.Count == 0 || userStoryList == null) {
                     return NotFound("Não foi possível encontrar nenhuma User Story para esse projeto");
                 }
 
@@ -108,6 +110,29 @@ namespace Tcc_backend.Controllers {
                 return Ok(modelList);
             }
             catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
+            }
+        }
+
+        [HttpGet]
+        [Route("sprints/{ProjetoID}")]
+        public IActionResult ListSprints([FromRoute] int ProjetoID) {
+
+            try {
+                var sprints = sSprint.ListByProjeto(ProjetoID);
+
+                if (sprints.Count == 0 || sprints == null)
+                    return NotFound("Não foi possível encontrar nenhuma User Story para esse projeto");
+
+                List<SprintModel> modelList = new List<SprintModel>();
+
+                foreach(var sprint in sprints) {
+                    modelList.Add(sSprint.EntityToModel(sprint));
+                }
+
+                return Ok(modelList);
+
+            } catch (Exception ex) {
                 return StatusCode(500, "Erro de servidor");
             }
         }
