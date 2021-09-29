@@ -83,7 +83,10 @@ namespace Tcc_backend.Business {
         public UserStory GetUserStoryPai(int UserStoryID) {
 
             var relacao = _relacaoDao.GetByUserStoryFilho(UserStoryID);
-            return this.Get(relacao.HistoriaUsuarioPaiID);
+            if (relacao != null) {
+                return this.Get(relacao.HistoriaUsuarioPaiID);
+            }
+            return null;
         }
 
         public UserStoryModel EntityToModel(UserStory userStory) {
