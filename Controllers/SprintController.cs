@@ -16,6 +16,8 @@ namespace Tcc_backend.Controllers {
 
         SprintService sSprint = new SprintService();
 
+        MembroService sMembro = new MembroService();
+
         [HttpGet]
         public IActionResult List([FromQuery] int ProjetoID) {
 
@@ -69,7 +71,10 @@ namespace Tcc_backend.Controllers {
 
                 foreach (var userStory in userStoryList) {
 
+                    var membro = sMembro.Get(userStory.MembroID);
+
                     var model = sUserStory.EntityToModel(userStory);
+                    model.MembroName = membro.Name;
 
                     modelList.Add(model);
                 }
