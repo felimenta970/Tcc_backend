@@ -22,5 +22,10 @@ namespace Tcc_backend.Service {
             UsuarioBusiness bUsuario = new UsuarioBusiness();
             return bUsuario.CreateUser(usuario, isProjectManager);
         }
+
+        public void UpdatePassword(string username, string newPassword, bool isProjectManager) {
+            UsuarioBusiness bUsuario = new UsuarioBusiness();
+            bUsuario.UpdatePassword(username, newPassword, isProjectManager);
+        }
     }
 }

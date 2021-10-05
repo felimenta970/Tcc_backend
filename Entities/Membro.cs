@@ -9,5 +9,7 @@ namespace Tcc_backend.Entities {
 
         [Key]
         public int MembroID { get; set; }
+
+        public bool IsFirstLogin { get; set; }
     }
 }

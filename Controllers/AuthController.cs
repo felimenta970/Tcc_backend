@@ -42,6 +42,7 @@ namespace Tcc_backend.Controllers {
                     if (pmID != null) {
                         var authData = sAuth.GetAuthData("iKC0yCHfjW4fiemBo44eK1OBpYplZ9e6", 2592000, user.ProjectManagerID.ToString());
                         authData.isProjectManager = true;
+                        authData.username = model.username;
                         return authData;
                     }
                 } catch {
@@ -49,6 +50,8 @@ namespace Tcc_backend.Controllers {
                     if (userID != null) {
                         var authData = sAuth.GetAuthData("iKC0yCHfjW4fiemBo44eK1OBpYplZ9e6", 2592000, user.MembroID.ToString());
                         authData.isProjectManager = false;
+                        authData.IsFirstLogin = user.IsFirstLogin;
+                        authData.username = model.username;
                         return authData;
                     }
                 }
@@ -58,6 +61,55 @@ namespace Tcc_backend.Controllers {
                 return StatusCode(500, "Erro de servidor");
             }
 
+        }
+
+        [HttpPost("updatePassword")]
+        public ActionResult<AuthData> Post([FromBody] UpdatePasswordModel model) {
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try {
+                var user = sUsuario.GetUsuario(model.username);
+
+                var passwordValid = sAuth.VerifyPassword(model.oldPassword, user.Senha);
+
+                if (!passwordValid) {
+                    return BadRequest(new { message = "Senha atual inválida" });
+                }
+
+                var newPassword = sAuth.HashPassword(model.newPassword);
+
+                try {
+                    var pmID = user.ProjectManagerID;
+                    if (pmID != null) {
+
+                        sUsuario.UpdatePassword(model.username, newPassword, true);
+
+                        var authData = sAuth.GetAuthData("iKC0yCHfjW4fiemBo44eK1OBpYplZ9e6", 2592000, user.ProjectManagerID.ToString());
+                        authData.isProjectManager = true;
+                        authData.username = model.username;
+                        return authData;
+                    }
+                }
+                catch {
+                    var userID = user.MembroID;
+                    if (userID != null) {
+
+                        sUsuario.UpdatePassword(model.username, newPassword, false);
+
+                        var authData = sAuth.GetAuthData("iKC0yCHfjW4fiemBo44eK1OBpYplZ9e6", 2592000, user.MembroID.ToString());
+                        authData.isProjectManager = false;
+                        authData.username = model.username;
+                        return authData;
+                    }
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
+            }
         }
 
         [HttpPost("register")]

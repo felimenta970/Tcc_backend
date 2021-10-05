@@ -41,10 +41,31 @@ namespace Tcc_backend.Business {
                     Name = usuario.Name,
                     Username = usuario.Username,
                     Senha = usuario.Senha,
+                    IsFirstLogin = true,
                 };
 
                 return _membroDao.Add(membro);
             }
+        }
+
+        public void UpdatePassword(string username, string newPassword, bool isProjectManager) {
+
+            if (isProjectManager) {
+
+                var pm = _pmDao.GetByUsername(username);
+                pm.Senha = newPassword;
+
+                _pmDao.Atualiza(pm);
+
+            } else {
+
+                var membro = _membroDao.GetByUsername(username);
+                membro.Senha = newPassword;
+                membro.IsFirstLogin = false;
+
+                _membroDao.Atualiza(membro);
+            }
+
         }
     }
 }

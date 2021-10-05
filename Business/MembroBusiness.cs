@@ -42,7 +42,7 @@ namespace Tcc_backend.Business {
             Usuario usuario = new Usuario() {
                 Name = model.Nome,
                 Username = model.UserName,
-                Senha = bAuth.HashPassword(randomPassword)
+                Senha = bAuth.HashPassword(randomPassword),
             };
 
             UsuarioBusiness bUsuario = new UsuarioBusiness();

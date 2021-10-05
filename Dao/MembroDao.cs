@@ -32,6 +32,11 @@ namespace Tcc_backend.Dao {
             return _databaseContext.Membro.FirstOrDefault(x => x.MembroID == MembroID);
         }
 
+        public Membro GetByUsername(string username) {
+
+            return _databaseContext.Membro.FirstOrDefault(x => x.Username == username);
+        }
+
         public List<Membro> GetListMembrosInProject(int ProjetoID) {
             var usuarioProjeto = _databaseContext.UsuarioProjeto.Where(x => x.ProjetoID == ProjetoID).Select(x => x.UsuarioID).ToList();
 
@@ -43,6 +48,12 @@ namespace Tcc_backend.Dao {
             _databaseContext.Membro.Add(membro);
             _databaseContext.SaveChanges();
             return membro.MembroID;
+        }
+
+        public void Atualiza(Membro membro) {
+
+            _databaseContext.Membro.Update(membro);
+            _databaseContext.SaveChanges();
         }
     }
 }

@@ -9,6 +9,8 @@ namespace Tcc_backend.Models {
         public long TokenExpirationTime { get; set; }
         public string Id { get; set; }
         public bool isProjectManager { get; set; }
+        public bool IsFirstLogin { get; set; }
+        public string username { get; set; }
 
     }
 
@@ -35,6 +37,15 @@ namespace Tcc_backend.Models {
         public string username { get; set; }
 
         public string name { get; set; }
+    }
+
+    public class UpdatePasswordModel {
+
+        public string username { get; set; }
+
+        public string oldPassword { get; set; }
+
+        public string newPassword { get; set; }
     }
     
 }

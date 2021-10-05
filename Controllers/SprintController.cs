@@ -95,6 +95,9 @@ namespace Tcc_backend.Controllers {
             if (string.IsNullOrWhiteSpace(model.Title))
                 return BadRequest(new { message = "O campo 'título' não pode estar vazio" });
 
+            if (model.UserStories == null || model.UserStories.Count == 0)
+                return BadRequest(new { message = "Necessário ao menos uma User Story para criar uma sprint" });
+
             ProjetoService sProjeto = new ProjetoService();
 
             var projID = sProjeto.Get(model.ProjetoID);

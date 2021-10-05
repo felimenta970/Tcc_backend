@@ -18,5 +18,16 @@ namespace Tcc_backend.Dao {
             return pm.ProjectManagerID;
         }
 
+        public ProjectManager GetByUsername(string username) {
+
+            return _databaseContext.ProjectManager.FirstOrDefault(x => x.Username == username);
+        }
+
+        public void Atualiza(ProjectManager pm) {
+
+            _databaseContext.ProjectManager.Update(pm);
+            _databaseContext.SaveChanges();
+        }
+
     }
 }
