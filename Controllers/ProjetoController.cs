@@ -122,7 +122,7 @@ namespace Tcc_backend.Controllers {
                 var sprints = sSprint.ListByProjeto(ProjetoID);
 
                 if (sprints.Count == 0 || sprints == null)
-                    return NotFound("Não foi possível encontrar nenhuma User Story para esse projeto");
+                    return NotFound("Não foi possível encontrar nenhuma Sprint para esse projeto");
 
                 List<SprintModel> modelList = new List<SprintModel>();
 

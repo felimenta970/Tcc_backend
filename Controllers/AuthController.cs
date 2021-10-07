@@ -72,6 +72,10 @@ namespace Tcc_backend.Controllers {
             try {
                 var user = sUsuario.GetUsuario(model.username);
 
+                if (user == null) {
+                    return BadRequest(new { message = "Este username não existe" });
+                }
+
                 var passwordValid = sAuth.VerifyPassword(model.oldPassword, user.Senha);
 
                 if (!passwordValid) {

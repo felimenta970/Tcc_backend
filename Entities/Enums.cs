@@ -24,6 +24,7 @@ namespace Tcc_backend.Entities {
             Esclarecimento = 1,
             MudancaResponsavel = 2,
             CorrecaoInfo = 3,
+            ImpossibilidadeTecnica = 4,
             Outro = 5
         }
     }
