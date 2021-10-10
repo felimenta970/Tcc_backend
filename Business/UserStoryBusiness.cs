@@ -117,6 +117,15 @@ namespace Tcc_backend.Business {
             return _dao.Update(userStory).UserStoryID;
         }
 
+        public void DesassociaUserStorySprint(int UserStoryID) {
+
+            var userStory = _dao.Get(UserStoryID);
+
+            userStory.SprintID = null;
+
+            _dao.Update(userStory);
+        }
+
         public List<UserStory> ListByProjetoSemSprint(int ProjetoID) {
 
             return _dao.ListByProjetoSemSprint(ProjetoID);

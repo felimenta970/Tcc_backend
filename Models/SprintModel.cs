@@ -29,5 +29,14 @@ namespace Tcc_backend.Models {
 
         public string Title { get; set; }
 
+        List<int> UserStories { get; set; }
+
+    }
+
+    public class SprintUserStoryModel { 
+
+        public int SprintID { get; set; }
+
+        public int UserStoryID { get; set; }
     }
 }

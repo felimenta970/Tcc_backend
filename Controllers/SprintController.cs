@@ -22,6 +22,8 @@ namespace Tcc_backend.Controllers {
 
         MembroService sMembro = new MembroService();
 
+        UserStoryService sUserStory = new UserStoryService();
+
         [HttpGet]
         public IActionResult List([FromQuery] int ProjetoID) {
 
@@ -153,6 +155,20 @@ namespace Tcc_backend.Controllers {
             catch {
                 return StatusCode(500);
             }
+        }
+
+        [HttpPost("removeAssociacaoSprintUserStory")]
+        public IActionResult RemoveAssociacaoSprintUserStory([FromBody] SprintUserStoryModel model) {
+
+            var userStory = sUserStory.Get(model.UserStoryID);
+
+            if (userStory.Status != Enums.UserStoryStatus.ToDo) {
+                return BadRequest("História de usuário em progresso ou finalizada, não é possível dessasociá-la desta Sprint");
+            }
+
+            sUserStory.DesassociaUserStorySprint(model.UserStoryID);
+
+            return Ok();
         }
 
     }
