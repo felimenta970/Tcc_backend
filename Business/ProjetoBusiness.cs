@@ -68,6 +68,13 @@ namespace Tcc_backend.Business {
 
         }
 
+        public void DesasociaMembroProjeto(int membroID, int projetoID) {
+
+            var associado = _usuarioProjetoDao.GetByMembroProjeto(membroID, projetoID);
+
+            _usuarioProjetoDao.Delete(associado);
+        }
+
         public ProjetoModel EntityToModel(Projeto projeto) {
 
             ProjetoModel model = new ProjetoModel() {

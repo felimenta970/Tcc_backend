@@ -18,6 +18,7 @@ namespace Tcc_backend.Controllers {
     public class MembroController : ControllerBase {
 
         UsuarioService sUsuario = new UsuarioService();
+        UserStoryService sUserStory = new UserStoryService();
 
         [HttpGet]
         [Route("userStories/{MembroID}")]
@@ -128,6 +129,7 @@ namespace Tcc_backend.Controllers {
             }
 
         }
+
     }
 
 }

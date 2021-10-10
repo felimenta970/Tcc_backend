@@ -14,7 +14,7 @@ namespace Tcc_backend.Dao {
         public List<Membro> GetListMembros(int? ProjetoID, bool isUserStoryEdit) {
 
             if (ProjetoID != null) {
-                var usuarioProjeto = _databaseContext.UsuarioProjeto.Where(x => x.ProjetoID == ProjetoID).Select(x => x.UsuarioID).ToList();
+                var usuarioProjeto = _databaseContext.UsuarioProjeto.Where(x => x.ProjetoID == ProjetoID && x.isProjectManager == false).Select(x => x.UsuarioID).ToList();
 
                 if (isUserStoryEdit)
                     return _databaseContext.Membro.Where(x => usuarioProjeto.Contains(x.MembroID)).ToList();

@@ -33,5 +33,10 @@ namespace Tcc_backend.Service {
             ProjetoBusiness bProjeto = new ProjetoBusiness();
             return bProjeto.EntityToModel(projeto);
         }
+
+        public void DesasociaMembroProjeto(int membroID, int projetoID) {
+            ProjetoBusiness bProjeto = new ProjetoBusiness();
+            bProjeto.DesasociaMembroProjeto(membroID, projetoID);
+        }
     }
 }

@@ -122,6 +122,5 @@ namespace Tcc_backend.Business {
             return _dao.ListByProjetoSemSprint(ProjetoID);
         }
 
-
     }
 }

@@ -182,5 +182,24 @@ namespace Tcc_backend.Controllers {
 
         }
 
+        [HttpPost("desasociaMembroProjeto/{projetoID}/{membroID}")]
+        public IActionResult DesasociaMembroProjeto([FromRoute] string membroID, [FromRoute] string projetoID) {
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var userStories = sUserStory.ListByMembro(Int32.Parse(membroID));
+
+            if (userStories.Count > 0) {
+                return BadRequest("Este usuario não pode ser removido pois ele possui uma história de usuário associado a ele");
+            }
+
+            ProjetoService sProjeto = new ProjetoService();
+            sProjeto.DesasociaMembroProjeto(Int32.Parse(membroID), Int32.Parse(projetoID));
+
+            return Ok("Desassociado com sucesso!");
+
+        }
+
     }
 }

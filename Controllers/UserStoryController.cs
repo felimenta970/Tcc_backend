@@ -38,13 +38,13 @@ namespace Tcc_backend.Controllers {
 
                 var membro = sMembro.Get(userStory.MembroID);
 
-                var userStoryPai = sUserStory.GetUserStoryPai(UserStoryID);
+                //var userStoryPai = sUserStory.GetUserStoryPai(UserStoryID);
 
                 var model = sUserStory.EntityToModel(userStory);
                 model.Anexos = anexos;
                 model.Commits = commits;
                 model.MembroName = membro.Name;
-                model.UserStoryPaiID = userStoryPai.UserStoryID;
+                //model.UserStoryPaiID = userStoryPai.UserStoryID;
 
                 return Ok(model);
             } else {
