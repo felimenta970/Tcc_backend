@@ -168,6 +168,16 @@ namespace Tcc_backend.Controllers {
 
             sUserStory.DesassociaUserStorySprint(model.UserStoryID);
 
+            MudancaModelCreate mudanca = new MudancaModelCreate() {
+                UserStoryID = model.UserStoryID,
+                ProjectManagerID = 0,
+                Description = "Desassoociacação de história de usuário da sprint",
+                ChangeReason = Enums.ChangeReason.Outro,
+            };
+
+            MudancaService sMudanca = new MudancaService();
+            sMudanca.Adicionar(mudanca);
+
             return Ok();
         }
 
