@@ -68,6 +68,11 @@ namespace Tcc_backend.Service {
             UserStoryBusiness bUserStory = new UserStoryBusiness();
             bUserStory.DesassociaUserStorySprint(UserStoryID);
         }
+
+        public List<UserStory> ListDeletedByProjeto(int ProjetoID) {
+            UserStoryBusiness bUserStory = new UserStoryBusiness();
+            return bUserStory.ListDeletedByProjeto(ProjetoID);
+        }
     }
 
     

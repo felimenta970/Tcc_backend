@@ -29,7 +29,7 @@ namespace Tcc_backend.Models {
 
         public string Title { get; set; }
 
-        List<int> UserStories { get; set; }
+        public List<int> UserStories { get; set; }
 
     }
 

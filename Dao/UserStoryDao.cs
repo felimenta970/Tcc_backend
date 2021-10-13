@@ -22,7 +22,7 @@ namespace Tcc_backend.Business {
         public List<UserStory> ListByProjeto(int ProjetoID) {
 
             var userStories = _databaseContext.UserStory
-                .Where(x => x.ProjetoID == ProjetoID).ToList();
+                .Where(x => x.ProjetoID == ProjetoID && x.Status != Enums.UserStoryStatus.Deleted).ToList();
 
             return userStories;
 
@@ -31,7 +31,7 @@ namespace Tcc_backend.Business {
         public List<UserStory> ListBySprint(int SprintID) {
 
             var userStories = _databaseContext.UserStory
-                .Where(x => x.SprintID == SprintID).ToList();
+                .Where(x => x.SprintID == SprintID && x.Status != Enums.UserStoryStatus.Deleted).ToList();
 
             return userStories;
 
@@ -40,7 +40,7 @@ namespace Tcc_backend.Business {
         public List<UserStory> ListByMembro(int MembroID) {
 
             var userStories = _databaseContext.UserStory
-                .Where(x => x.MembroID == MembroID).ToList();
+                .Where(x => x.MembroID == MembroID && x.Status != Enums.UserStoryStatus.Deleted).ToList();
 
             return userStories;
 
@@ -71,7 +71,15 @@ namespace Tcc_backend.Business {
 
         public List<UserStory> ListByProjetoSemSprint(int ProjetoID) {
 
-            return _databaseContext.UserStory.Where(x => x.ProjetoID == ProjetoID && x.SprintID == null).ToList();
+            return _databaseContext.UserStory.Where(x => x.ProjetoID == ProjetoID && x.SprintID == null && x.Status != Enums.UserStoryStatus.Deleted).ToList();
+        }
+
+        public List<UserStory> ListDeletedByProjeto(int ProjetoID) {
+
+            var userStories = _databaseContext.UserStory
+                .Where(x => x.ProjetoID == ProjetoID && x.Status == Enums.UserStoryStatus.Deleted).ToList();
+
+            return userStories;
         }
     }
 }

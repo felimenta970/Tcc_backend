@@ -10,6 +10,7 @@ namespace Tcc_backend.Entities {
             ToDo = 1,
             InProgress = 2,
             Done = 3,
+            Deleted = 4,
         }
 
         public enum TypeAnexo {
@@ -25,7 +26,8 @@ namespace Tcc_backend.Entities {
             MudancaResponsavel = 2,
             CorrecaoInfo = 3,
             ImpossibilidadeTecnica = 4,
-            Outro = 5
+            Outro = 5,
+            Deleted = 6,
         }
     }
 

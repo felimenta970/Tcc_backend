@@ -181,10 +181,27 @@ namespace Tcc_backend.Controllers {
                 return BadRequest();
 
             if (model.Status == null)
-                return BadRequest("Selecione um status para a user story");
+                return BadRequest("Selecione um status para a história de usuário");
 
             try {
                 var result = sUserStory.ChangeStatusUserStory(model.UserStoryID, model.Status);
+                return Ok(result);
+
+            } catch (Exception ex) {
+                return StatusCode(500, "Erro de servidor");
+            }
+        }
+
+        [HttpGet("deleted/{ProjetoID}")]
+        public IActionResult ListDeletedByProduto([FromRoute] int ProjetoID) {
+
+            try {
+                var result = sUserStory.ListDeletedByProjeto(ProjetoID);
+
+                if (result.Count == 0) {
+                    return NotFound("Não existem histórias de usuário apagadas para este projeto");
+                }
+
                 return Ok(result);
 
             } catch (Exception ex) {

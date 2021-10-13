@@ -73,11 +73,22 @@ namespace Tcc_backend.Business {
 
         public void Delete(int UserStoryID) {
 
-            UserStory userStory = new UserStory() {
+            var userStory = this.Get(UserStoryID);
+
+            userStory.Status = Enums.UserStoryStatus.Deleted;
+
+            _dao.Update(userStory);
+
+            Mudanca mudanca = new Mudanca() {
                 UserStoryID = UserStoryID,
+                ProjectManagerID = 0,
+                Description = "História de Usuário apagada",
+                ChangeReason = Enums.ChangeReason.Deleted,
             };
 
-            _dao.Delete(userStory);
+            MudancaDao _mudancaDao = new MudancaDao();
+            _mudancaDao.Adicionar(mudanca);
+
         }
 
         public UserStory GetUserStoryPai(int UserStoryID) {
@@ -129,6 +140,10 @@ namespace Tcc_backend.Business {
         public List<UserStory> ListByProjetoSemSprint(int ProjetoID) {
 
             return _dao.ListByProjetoSemSprint(ProjetoID);
+        }
+
+        public List<UserStory> ListDeletedByProjeto(int ProjetoID) {
+            return _dao.ListDeletedByProjeto(ProjetoID);
         }
 
     }

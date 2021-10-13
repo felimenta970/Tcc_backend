@@ -45,6 +45,16 @@ namespace Tcc_backend.Business {
 
             sprint.Title = model.Title;
 
+            UserStoryBusiness bUserStory = new UserStoryBusiness();
+            UserStoryDao userStoryDao = new UserStoryDao();
+
+            foreach (var userStoryID in model.UserStories) {
+                var userStory = bUserStory.Get(userStoryID);
+                userStory.SprintID = model.SprintID;
+                userStoryDao.Update(userStory);
+
+            }
+
             return _dao.Update(sprint);
 
         }
