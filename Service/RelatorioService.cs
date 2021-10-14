@@ -15,6 +15,12 @@ namespace Tcc_backend.Service {
 
         public List<int> RelatorioMudancasPorTipo(int ProjetoID) {
             RelatorioBusiness bRelatorio = new RelatorioBusiness();
-            return bRelatorio.RelatorioMudancasPorTipo(ProjetoID);        }
+            return bRelatorio.RelatorioMudancasPorTipo(ProjetoID);
+        }
+
+        public List<int> RelatorioUserStoriesPorStatus(int ProjetoID) {
+            RelatorioBusiness bRelatorio = new RelatorioBusiness();
+            return bRelatorio.RelatorioUserStoriesPorStatus(ProjetoID);
+        }
     }
 }

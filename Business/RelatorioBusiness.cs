@@ -37,7 +37,7 @@ namespace Tcc_backend.Business {
             UserStoryDao _userStoryDao = new UserStoryDao();
             MudancaDao _mudancaDao = new MudancaDao();
 
-            var listUserStories = _userStoryDao.ListByProjeto(ProjetoID);
+            var listUserStories = _userStoryDao.ListByProjetoAll(ProjetoID);
 
             RelatoriosModel model = new RelatoriosModel();
 
@@ -46,6 +46,7 @@ namespace Tcc_backend.Business {
             int countCorrecaoInfo = 0;
             int countImpTecnica = 0;
             int countOutros = 0;
+            int countDeleted = 0;
 
             foreach (var userStory in listUserStories) {
 
@@ -63,6 +64,8 @@ namespace Tcc_backend.Business {
                         countImpTecnica++;
                     if (mudanca.ChangeReason == ChangeReason.Outro)
                         countOutros++;
+                    if (mudanca.ChangeReason == ChangeReason.Deleted)
+                        countDeleted++;
                 }
 
             }
@@ -72,7 +75,42 @@ namespace Tcc_backend.Business {
             contagem.Add(countMudancaResp);
             contagem.Add(countCorrecaoInfo);
             contagem.Add(countImpTecnica);
+            contagem.Add(countDeleted);
             contagem.Add(countOutros);
+
+            return contagem;
+
+        }
+
+        public List<int> RelatorioUserStoriesPorStatus(int ProjetoID) {
+
+            UserStoryDao _userStoryDao = new UserStoryDao();
+
+            var listUserStories = _userStoryDao.ListByProjetoAll(ProjetoID);
+
+
+            int countAFazer = 0;
+            int countEmProgresso = 0;
+            int countFinalizado = 0;
+            int countApagados = 0;
+
+            foreach(var userStory in listUserStories) {
+
+                if (userStory.Status == UserStoryStatus.ToDo)
+                    countAFazer++;
+                if (userStory.Status == UserStoryStatus.InProgress)
+                    countEmProgresso++;
+                if (userStory.Status == UserStoryStatus.Done)
+                    countFinalizado++;
+                if (userStory.Status == UserStoryStatus.Deleted)
+                    countApagados++;
+            }
+
+            List<int> contagem = new List<int>();
+            contagem.Add(countAFazer);
+            contagem.Add(countEmProgresso);
+            contagem.Add(countFinalizado);
+            contagem.Add(countApagados);
 
             return contagem;
 

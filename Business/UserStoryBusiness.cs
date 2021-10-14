@@ -84,6 +84,7 @@ namespace Tcc_backend.Business {
                 ProjectManagerID = 0,
                 Description = "História de Usuário apagada",
                 ChangeReason = Enums.ChangeReason.Deleted,
+                DataModificacao = DateTime.Now,
             };
 
             MudancaDao _mudancaDao = new MudancaDao();

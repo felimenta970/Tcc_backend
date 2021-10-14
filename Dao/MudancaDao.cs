@@ -14,7 +14,7 @@ namespace Tcc_backend.Business {
         public List<Mudanca> ListByUserStoryID(int UserStoryID) {
 
             var mudancas = _databaseContext.Mudanca
-                .Where(x => x.UserStoryID == UserStoryID).ToList();
+                .Where(x => x.UserStoryID == UserStoryID).OrderByDescending(x => x.DataModificacao).ToList();
 
             return mudancas;
         }

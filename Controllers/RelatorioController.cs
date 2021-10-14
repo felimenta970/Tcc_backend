@@ -49,5 +49,21 @@ namespace Tcc_backend.Controllers {
             }
         }
 
+        [HttpGet("mudancasPorStatus/{ProjetoID}")]
+        public IActionResult GetPorProjetoStatus([FromRoute] int ProjetoID) {
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try {
+                var relatorio = sRelatorio.RelatorioUserStoriesPorStatus(ProjetoID);
+
+                return Ok(relatorio);
+
+            } catch(Exception ex) {
+                return StatusCode(500, "Erro de servidor " + ex.Message);
+            }
+        }
+
     }
 }

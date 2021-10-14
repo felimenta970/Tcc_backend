@@ -28,6 +28,13 @@ namespace Tcc_backend.Business {
 
         }
 
+        public List<UserStory> ListByProjetoAll(int ProjetoID) {
+            var userStories = _databaseContext.UserStory
+                .Where(x => x.ProjetoID == ProjetoID).ToList();
+
+            return userStories;
+        }
+
         public List<UserStory> ListBySprint(int SprintID) {
 
             var userStories = _databaseContext.UserStory
