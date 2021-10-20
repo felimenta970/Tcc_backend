@@ -124,6 +124,17 @@ namespace Tcc_backend.Business {
 
             var userStory = _dao.Get(UserStoryID);
 
+            Mudanca mudanca = new Mudanca() {
+                UserStoryID = UserStoryID,
+                ProjectManagerID = 0,
+                Description = $"Mudança de status de '{this.ConvertStatusEnumToString(userStory.Status)}' para '{this.ConvertStatusEnumToString(status)}'",
+                ChangeReason = Enums.ChangeReason.StatusChange,
+                DataModificacao = DateTime.Now,
+            };
+
+            MudancaDao _mudancaDao = new MudancaDao();
+            _mudancaDao.Adicionar(mudanca);
+
             userStory.Status = status;
 
             return _dao.Update(userStory).UserStoryID;
@@ -146,6 +157,21 @@ namespace Tcc_backend.Business {
         public List<UserStory> ListDeletedByProjeto(int ProjetoID) {
             return _dao.ListDeletedByProjeto(ProjetoID);
         }
+
+
+        public string ConvertStatusEnumToString(Enums.UserStoryStatus pEnum) {
+
+            if (pEnum == Enums.UserStoryStatus.ToDo)
+                return "A fazer";
+            if (pEnum == Enums.UserStoryStatus.InProgress)
+                return "Em progresso";
+            if (pEnum == Enums.UserStoryStatus.Done)
+                return "Finalizado";
+
+            return "";
+
+        }
+
 
     }
 }

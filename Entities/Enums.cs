@@ -28,6 +28,7 @@ namespace Tcc_backend.Entities {
             ImpossibilidadeTecnica = 4,
             Outro = 5,
             Deleted = 6,
+            StatusChange = 7
         }
     }
 

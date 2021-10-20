@@ -62,6 +62,8 @@ namespace Tcc_backend.Business {
                 return "Outros";
             if (reason == Enums.ChangeReason.Deleted)
                 return "Remoção";
+            if (reason == Enums.ChangeReason.StatusChange)
+                return "Mudança de status";
 
             return null;
         }
