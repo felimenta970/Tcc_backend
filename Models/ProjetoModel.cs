@@ -32,7 +32,7 @@ namespace Tcc_backend.Models {
 
         public int ProjectManagerID { get; set; }
 
-        public List<MembroModel> Membros { get; set; }
+        public List<int> Membros { get; set; }
 
     }
 

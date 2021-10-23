@@ -118,6 +118,9 @@ namespace Tcc_backend.Controllers {
             try {
                 var uniqueUser = sUsuario.isUniqueUsername(model.UserName);
 
+                if (!uniqueUser)
+                    return BadRequest("Nome de Usuário já utilizado");
+
                 MembroService sMembro = new MembroService();
 
                 var result = sMembro.CreateMember(model);

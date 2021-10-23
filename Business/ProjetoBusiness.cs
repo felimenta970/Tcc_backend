@@ -35,9 +35,7 @@ namespace Tcc_backend.Business {
 
             var projetoID = _dao.Adicionar(projeto);
 
-            List<int> membrosID = projetoModel.Membros.Select(x => x.MembroID).ToList();
-
-            _usuarioDao.AssociaMembroProjeto(membrosID, projetoID);
+            _usuarioDao.AssociaMembroProjeto(projetoModel.Membros, projetoID);
 
             _usuarioDao.AssociaManagerProjeto(projetoModel.ProjectManagerID, projetoID);
 
