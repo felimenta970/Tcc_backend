@@ -45,6 +45,7 @@ namespace Tcc_backend.Business {
             int countMudancaResp = 0;
             int countCorrecaoInfo = 0;
             int countImpTecnica = 0;
+            int countMudancaStatus = 0;
             int countOutros = 0;
             int countDeleted = 0;
 
@@ -66,6 +67,8 @@ namespace Tcc_backend.Business {
                         countOutros++;
                     if (mudanca.ChangeReason == ChangeReason.Deleted)
                         countDeleted++;
+                    if (mudanca.ChangeReason == ChangeReason.StatusChange)
+                        countMudancaStatus++;
                 }
 
             }
@@ -75,6 +78,7 @@ namespace Tcc_backend.Business {
             contagem.Add(countMudancaResp);
             contagem.Add(countCorrecaoInfo);
             contagem.Add(countImpTecnica);
+            contagem.Add(countMudancaStatus);
             contagem.Add(countDeleted);
             contagem.Add(countOutros);
 

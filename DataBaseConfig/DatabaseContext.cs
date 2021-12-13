@@ -22,7 +22,11 @@ namespace Tcc_backend.DataBaseConfig {
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
 
-            optionsBuilder.UseSqlServer("Server=tcp:tcc-backend.database.windows.net,1433;Initial Catalog=tcc_backend2;Persist Security Info=False;User ID=felimenta;Password=Az11617!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            //
+
+            //optionsBuilder.UseSqlServer("Server=tcp:tcc-backend.database.windows.net,1433;Initial Catalog=tcc_backend2;Persist Security Info=False;User ID=felimenta;Password=Az11617!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+
+            optionsBuilder.UseSqlServer("Data Source=DESKTOP-S8M2H2O\\SQLEXPRESS;Trusted_Connection=True;Integrated Security=True;Initial Catalog=tcc_backend3");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
